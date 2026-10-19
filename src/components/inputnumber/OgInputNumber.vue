@@ -27,7 +27,7 @@
         @input="onInput"
         @change="onChange"
         @focus="$emit('focus', $event)"
-        @blur="$emit('blur', $event)"
+        @blur="onBlur"
         @keydown.up.prevent="increment"
         @keydown.down.prevent="decrement"
       />
@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import type { OgSize } from '@/types';
 
 defineOptions({
@@ -121,42 +121,78 @@ const displayValue = computed(() => {
 const isMinReached = computed(() => props.min !== undefined && props.modelValue !== null && props.modelValue <= props.min);
 const isMaxReached = computed(() => props.max !== undefined && props.modelValue !== null && props.modelValue >= props.max);
 
+const clampValue = (newValue: number | null): number | null => {
+  if (newValue === null) return null;
+  let clamped = newValue;
+  if (props.min !== undefined && clamped < props.min) clamped = props.min;
+  if (props.max !== undefined && clamped > props.max) clamped = props.max;
+  return clamped;
+};
+
 const updateValue = (newValue: number | null) => {
-  if (newValue !== null) {
-    if (props.min !== undefined && newValue < props.min) newValue = props.min;
-    if (props.max !== undefined && newValue > props.max) newValue = props.max;
+  const clamped = clampValue(newValue);
+  emit('update:modelValue', clamped);
+  if (inputRef.value) {
+    inputRef.value.value = clamped === null ? '' : String(clamped);
   }
-  emit('update:modelValue', newValue);
 };
 
 const increment = () => {
   if (props.disabled) return;
-  const current = props.modelValue ?? 0;
+  const current = props.modelValue ?? (props.min ?? 0);
   updateValue(current + props.step);
 };
 
 const decrement = () => {
   if (props.disabled) return;
-  const current = props.modelValue ?? 0;
+  const current = props.modelValue ?? (props.max ?? 0);
   updateValue(current - props.step);
 };
 
 const onInput = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const val = target.value.trim();
-  if (val === '') {
-    updateValue(null);
-  } else {
-    const num = Number(val);
-    if (!isNaN(num)) {
+  if (val === '' || val === '-') {
+    emit('update:modelValue', null);
+    return;
+  }
+  const num = Number(val);
+  if (!isNaN(num)) {
+    if (props.max !== undefined && num > props.max) {
+      target.value = String(props.max);
+      updateValue(props.max);
+    } else {
       updateValue(num);
     }
   }
 };
 
+const onBlur = (event: FocusEvent) => {
+  const target = event.target as HTMLInputElement;
+  const val = target.value.trim();
+  if (val !== '') {
+    const num = Number(val);
+    if (!isNaN(num)) {
+      const clamped = clampValue(num);
+      target.value = clamped === null ? '' : String(clamped);
+      emit('update:modelValue', clamped);
+    }
+  }
+  emit('blur', event);
+};
+
 const onChange = (event: Event) => {
   emit('change', event);
 };
+
+watch(
+  () => props.modelValue,
+  (newVal) => {
+    if (inputRef.value && document.activeElement !== inputRef.value) {
+      inputRef.value.value = newVal === null || newVal === undefined || isNaN(newVal) ? '' : String(newVal);
+    }
+  }
+);
 
 const containerClasses = computed(() => [
   'og-inputnumber',

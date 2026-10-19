@@ -129,6 +129,11 @@ const boxClasses = computed(() => [
   position: relative;
   width: var(--og-checkbox-size);
   height: var(--og-checkbox-size);
+  min-width: var(--og-checkbox-size);
+  min-height: var(--og-checkbox-size);
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
   cursor: pointer;
   user-select: none;
 }

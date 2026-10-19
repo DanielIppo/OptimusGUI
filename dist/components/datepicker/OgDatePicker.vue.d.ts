@@ -1,23 +1,43 @@
+import { OgSize } from '../../types';
+
 export interface OgDatePickerProps {
     modelValue?: Date | string | null;
     placeholder?: string;
     disabled?: boolean;
+    invalid?: boolean;
+    fluid?: boolean;
+    size?: OgSize;
+    showClear?: boolean;
+    minDate?: Date;
+    maxDate?: Date;
 }
 declare const _default: import('vue').DefineComponent<import('vue').ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<OgDatePickerProps>, {
     modelValue: null;
+    placeholder: string;
     disabled: boolean;
+    invalid: boolean;
+    fluid: boolean;
+    showClear: boolean;
 }>>, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    "update:modelValue": (value: string | Date | null) => void;
-    change: (event: Event) => void;
+    "update:modelValue": (value: Date | null) => void;
+    change: (value: Date | null) => void;
 }, string, import('vue').PublicProps, Readonly<import('vue').ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<OgDatePickerProps>, {
     modelValue: null;
+    placeholder: string;
     disabled: boolean;
+    invalid: boolean;
+    fluid: boolean;
+    showClear: boolean;
 }>>> & Readonly<{
-    "onUpdate:modelValue"?: ((value: string | Date | null) => any) | undefined;
-    onChange?: ((event: Event) => any) | undefined;
+    "onUpdate:modelValue"?: ((value: Date | null) => any) | undefined;
+    onChange?: ((value: Date | null) => any) | undefined;
 }>, {
     disabled: boolean;
     modelValue: Date | string | null;
+    placeholder: string;
+    fluid: boolean;
+    invalid: boolean;
+    showClear: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, true, {}, any>;
 export default _default;
 type __VLS_NonUndefinedable<T> = T extends undefined ? never : T;

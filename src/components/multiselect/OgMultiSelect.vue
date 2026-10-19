@@ -17,7 +17,7 @@
             :class="['og-multiselect__option', { 'og-multiselect__option--selected': isSelected(option) }]"
             @click="toggleOption(option)"
           >
-            <input type="checkbox" :checked="isSelected(option)" class="og-multiselect__checkbox" />
+            <OgCheckbox :model-value="isSelected(option)" binary style="pointer-events: none;" />
             <span>{{ getLabel(option) }}</span>
           </li>
         </ul>
@@ -28,6 +28,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch, nextTick, onMounted, onUnmounted } from 'vue';
+import OgCheckbox from '@/components/checkbox/OgCheckbox.vue';
 
 defineOptions({
   name: 'OgMultiSelect',

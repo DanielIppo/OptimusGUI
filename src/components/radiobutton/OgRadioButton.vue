@@ -82,6 +82,11 @@ const radioClasses = computed(() => [
   position: relative;
   width: var(--og-radio-size);
   height: var(--og-radio-size);
+  min-width: var(--og-radio-size);
+  min-height: var(--og-radio-size);
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
   cursor: pointer;
   user-select: none;
 }
@@ -102,9 +107,12 @@ const radioClasses = computed(() => [
   justify-content: center;
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
   background-color: var(--og-radio-bg);
   border: 1px solid var(--og-radio-border-color);
-  border-radius: 50%;
+  border-radius: var(--og-radius-full);
   transition: all var(--og-transition-fast);
 }
 
@@ -124,7 +132,9 @@ const radioClasses = computed(() => [
 .og-radiobutton__icon {
   width: 50%;
   height: 50%;
-  border-radius: 50%;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--og-radius-full);
   background-color: var(--og-radio-dot-color);
   transition: transform var(--og-transition-fast);
 }

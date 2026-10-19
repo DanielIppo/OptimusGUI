@@ -73,10 +73,10 @@ declare const __VLS_component: import('vue').DefineComponent<import('vue').Extra
     loading: boolean;
     fluid: boolean;
     invalid: boolean;
+    showClear: boolean;
     options: any[];
     filterPlaceholder: string;
     emptyMessage: string;
-    showClear: boolean;
     overlayTeleport: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, true, {}, any>;
 declare const _default: __VLS_WithTemplateSlots<typeof __VLS_component, ReturnType<typeof __VLS_template>>;
