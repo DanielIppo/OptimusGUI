@@ -7,7 +7,7 @@
           <span class="sidebar__logo-icon">🚀</span>
           <span class="sidebar__logo-text">Optimus<strong>GUI</strong></span>
         </div>
-        <span class="sidebar__badge">v1.0</span>
+        <span class="sidebar__badge">{{ componentsData.length }} comp</span>
       </div>
 
       <!-- Search Input -->
@@ -123,81 +123,80 @@
               </div>
             </div>
 
+            <!-- OgInputText Demo -->
+            <div v-else-if="activeComponent.id === 'inputtext'" class="demo-box">
+              <div class="demo-field" style="width: 20rem; max-width: 100%;">
+                <label>Digita un testo nel campo reattivo:</label>
+                <OgInputText v-model="inputTextVal" placeholder="Scrivi qualcosa..." :size="inputSize" :disabled="inputDisabled" :invalid="inputInvalid" fluid />
+                <div class="demo-controls">
+                  <label>Dimensione:</label>
+                  <select v-model="inputSize" class="demo-select">
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                  </select>
+                  <label class="demo-checkbox-label">
+                    <input v-model="inputInvalid" type="checkbox" /> Invalid
+                  </label>
+                  <label class="demo-checkbox-label">
+                    <input v-model="inputDisabled" type="checkbox" /> Disabled
+                  </label>
+                </div>
+                <span class="demo-val-badge">Valore v-model: <strong>{{ inputTextVal || '(vuoto)' }}</strong></span>
+              </div>
+            </div>
+
+            <!-- OgTextarea Demo -->
+            <div v-else-if="activeComponent.id === 'textarea'" class="demo-box">
+              <div class="demo-field" style="width: 22rem; max-width: 100%;">
+                <label>Area di testo con AutoResize attivo:</label>
+                <OgTextarea v-model="textareaVal" autoResize rows="3" placeholder="Scrivi una descrizione..." fluid />
+                <span class="demo-val-badge">Caratteri: <strong>{{ textareaVal.length }}</strong></span>
+              </div>
+            </div>
+
             <!-- OgInputNumber Demo -->
             <div v-else-if="activeComponent.id === 'inputnumber'" class="demo-box">
               <div class="demo-field">
-                <label>Prova a digitare a mano più di 100 (es. 1000) o meno di 0:</label>
-                <OgInputNumber
-                  v-model="inputNumVal"
-                  :min="0"
-                  :max="100"
-                  showButtons
-                  prefix="€ "
-                />
-                <span class="demo-val-badge">Valore reattivo v-model: <strong>{{ inputNumVal ?? 'null' }}</strong></span>
+                <label>Inserisci un numero con min: 0 e max: 100 (clamp immediato):</label>
+                <OgInputNumber v-model="inputNumVal" :min="0" :max="100" showButtons prefix="€ " />
+                <span class="demo-val-badge">Valore numerico v-model: <strong>{{ inputNumVal ?? 'null' }}</strong></span>
+              </div>
+            </div>
+
+            <!-- OgPassword Demo -->
+            <div v-else-if="activeComponent.id === 'password'" class="demo-box">
+              <div class="demo-field">
+                <label>Password con icona per rivelare il testo (Toggle Mask):</label>
+                <OgPassword v-model="passwordVal" toggleMask placeholder="Inserisci password..." />
+                <span class="demo-val-badge">Valore reale: <strong>{{ passwordVal || '(vuoto)' }}</strong></span>
               </div>
             </div>
 
             <!-- OgDatePicker Demo -->
             <div v-else-if="activeComponent.id === 'datepicker'" class="demo-box">
               <div class="demo-field">
-                <label>Seleziona una data con il nuovo calendario personalizzato OptimusGUI:</label>
-                <OgDatePicker v-model="dateVal" placeholder="Clicca per aprire il calendario..." showClear />
-                <span class="demo-val-badge">Data selezionata: <strong>{{ dateVal ? dateVal.toString() : 'Nessuna data' }}</strong></span>
-              </div>
-            </div>
-
-            <!-- OgMultiSelect Demo -->
-            <div v-else-if="activeComponent.id === 'multiselect'" class="demo-box">
-              <div class="demo-field">
-                <label>Selezione multipla con checkbox OptimusGUI integrati:</label>
-                <OgMultiSelect
-                  v-model="multiVal"
-                  :options="countriesList"
-                  optionLabel="name"
-                  optionValue="code"
-                  placeholder="Seleziona nazioni..."
-                />
-                <span class="demo-val-badge">Valori selezionati: <strong>{{ multiVal.join(', ') || 'Nessuno' }}</strong></span>
+                <label>Seleziona una data con il calendario popover custom OptimusGUI:</label>
+                <OgDatePicker v-model="dateVal" placeholder="Scegli una data..." showClear />
+                <span class="demo-val-badge">Data selezionata: <strong>{{ dateVal ? dateVal.toLocaleDateString() : 'Nessuna data' }}</strong></span>
               </div>
             </div>
 
             <!-- OgSelect Demo -->
             <div v-else-if="activeComponent.id === 'select'" class="demo-box">
               <div class="demo-field">
-                <label>Select a tendina con filtro di ricerca e reset rapido:</label>
-                <OgSelect
-                  v-model="selectCity"
-                  :options="citiesList"
-                  optionLabel="name"
-                  optionValue="code"
-                  placeholder="Seleziona una città..."
-                  filter
-                  showClear
-                />
-                <span class="demo-val-badge">Città selezionata: <strong>{{ selectCity || 'Nessuna' }}</strong></span>
+                <label>Select a tendina con ricerca (filter) e reset (showClear):</label>
+                <OgSelect v-model="selectCity" :options="citiesList" optionLabel="name" optionValue="code" placeholder="Seleziona città..." filter showClear />
+                <span class="demo-val-badge">Codice città: <strong>{{ selectCity || 'Nessuna' }}</strong></span>
               </div>
             </div>
 
-            <!-- OgRadioButton Demo -->
-            <div v-else-if="activeComponent.id === 'radiobutton'" class="demo-box">
+            <!-- OgMultiSelect Demo -->
+            <div v-else-if="activeComponent.id === 'multiselect'" class="demo-box">
               <div class="demo-field">
-                <label>Radio Button rigorosamente circolari (anti-ovalizzazione):</label>
-                <div class="demo-radio-group">
-                  <label class="demo-choice">
-                    <OgRadioButton v-model="radioChoice" value="starter" name="pricing" />
-                    <span>Starter Plan</span>
-                  </label>
-                  <label class="demo-choice">
-                    <OgRadioButton v-model="radioChoice" value="pro" name="pricing" />
-                    <span>Professional Plan</span>
-                  </label>
-                  <label class="demo-choice">
-                    <OgRadioButton v-model="radioChoice" value="enterprise" name="pricing" />
-                    <span>Enterprise Plan</span>
-                  </label>
-                </div>
-                <span class="demo-val-badge">Piano attivo: <strong>{{ radioChoice }}</strong></span>
+                <label>MultiSelect con checkbox OptimusGUI integrati:</label>
+                <OgMultiSelect v-model="multiVal" :options="countriesList" optionLabel="name" optionValue="code" placeholder="Seleziona nazioni..." />
+                <span class="demo-val-badge">Selezionati: <strong>{{ multiVal.join(', ') || 'Nessuno' }}</strong></span>
               </div>
             </div>
 
@@ -206,9 +205,50 @@
               <div class="demo-field">
                 <label class="demo-choice">
                   <OgCheckbox v-model="chkVal" binary />
-                  <span>Abilita opzione avanzata</span>
+                  <span>Abilita notifiche push via browser</span>
                 </label>
-                <span class="demo-val-badge">Stato checkbox: <strong>{{ chkVal ? 'Attivo' : 'Disattivo' }}</strong></span>
+                <span class="demo-val-badge">Stato: <strong>{{ chkVal ? 'Attivo (true)' : 'Disattivo (false)' }}</strong></span>
+              </div>
+            </div>
+
+            <!-- OgRadioButton Demo -->
+            <div v-else-if="activeComponent.id === 'radiobutton'" class="demo-box">
+              <div class="demo-field">
+                <label>Pulsanti radio rigorosamente circolari (anti-ovalizzazione):</label>
+                <div class="demo-radio-group">
+                  <label class="demo-choice">
+                    <OgRadioButton v-model="radioChoice" value="starter" name="pricing" />
+                    <span>Starter</span>
+                  </label>
+                  <label class="demo-choice">
+                    <OgRadioButton v-model="radioChoice" value="pro" name="pricing" />
+                    <span>Professional</span>
+                  </label>
+                  <label class="demo-choice">
+                    <OgRadioButton v-model="radioChoice" value="enterprise" name="pricing" />
+                    <span>Enterprise</span>
+                  </label>
+                </div>
+                <span class="demo-val-badge">Piano attivo: <strong>{{ radioChoice }}</strong></span>
+              </div>
+            </div>
+
+            <!-- OgToggleSwitch Demo -->
+            <div v-else-if="activeComponent.id === 'toggleswitch'" class="demo-box">
+              <div class="demo-field">
+                <label class="demo-choice">
+                  <OgToggleSwitch v-model="toggleSwitchVal" />
+                  <span>Modalità Risparmio Dati</span>
+                </label>
+                <span class="demo-val-badge">Switch: <strong>{{ toggleSwitchVal ? 'ON' : 'OFF' }}</strong></span>
+              </div>
+            </div>
+
+            <!-- OgToggleButton Demo -->
+            <div v-else-if="activeComponent.id === 'togglebutton'" class="demo-box">
+              <div class="demo-field">
+                <OgToggleButton v-model="toggleBtnVal" onLabel="Bloccato" offLabel="Sbloccato" />
+                <span class="demo-val-badge">Stato: <strong>{{ toggleBtnVal ? 'Bloccato' : 'Sbloccato' }}</strong></span>
               </div>
             </div>
 
@@ -224,18 +264,79 @@
             <!-- OgRating Demo -->
             <div v-else-if="activeComponent.id === 'rating'" class="demo-box">
               <div class="demo-field">
-                <label>Valutazione utente:</label>
+                <label>Valutazione utente (con icona di reset):</label>
                 <OgRating v-model="ratingVal" :stars="5" />
-                <span class="demo-val-badge">Punteggio: <strong>{{ ratingVal ?? 0 }} / 5</strong></span>
+                <span class="demo-val-badge">Punteggio: <strong>{{ ratingVal ?? 0 }} / 5 stelle</strong></span>
+              </div>
+            </div>
+
+            <!-- OgColorPicker Demo -->
+            <div v-else-if="activeComponent.id === 'colorpicker'" class="demo-box">
+              <div class="demo-field">
+                <label>Seleziona un colore d'accento:</label>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                  <OgColorPicker v-model="colorPickerVal" />
+                  <span :style="{ backgroundColor: colorPickerVal, color: '#fff', padding: '0.25rem 0.75rem', borderRadius: '6px', fontSize: '0.85rem' }">
+                    {{ colorPickerVal }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- OgAutoComplete Demo -->
+            <div v-else-if="activeComponent.id === 'autocomplete'" class="demo-box">
+              <div class="demo-field">
+                <label>Cerca framework / linguaggi (es. Vue, TypeScript, React):</label>
+                <OgAutoComplete v-model="autoCompleteVal" :suggestions="filteredTech" @complete="searchTech" placeholder="Digita per cercare..." />
+                <span class="demo-val-badge">Selezione: <strong>{{ autoCompleteVal || 'Nessuna' }}</strong></span>
+              </div>
+            </div>
+
+            <!-- OgListbox Demo -->
+            <div v-else-if="activeComponent.id === 'listbox'" class="demo-box">
+              <div class="demo-field">
+                <label>Seleziona un elemento dalla lista:</label>
+                <OgListbox v-model="listboxVal" :options="citiesList" optionLabel="name" optionValue="code" style="width: 16rem;" />
+                <span class="demo-val-badge">Selezionato: <strong>{{ listboxVal }}</strong></span>
+              </div>
+            </div>
+
+            <!-- OgSelectButton Demo -->
+            <div v-else-if="activeComponent.id === 'selectbutton'" class="demo-box">
+              <div class="demo-field">
+                <label>Pulsantiera a segmenti:</label>
+                <OgSelectButton v-model="selectButtonVal" :options="['Giorno', 'Settimana', 'Mese', 'Anno']" />
+                <span class="demo-val-badge">Periodo attivo: <strong>{{ selectButtonVal }}</strong></span>
               </div>
             </div>
 
             <!-- OgInputOtp Demo -->
             <div v-else-if="activeComponent.id === 'inputotp'" class="demo-box">
               <div class="demo-field">
-                <label>Codice di sicurezza OTP (prova a incollare un codice a 6 cifre):</label>
+                <label>Codice OTP (prova anche a incollare un codice a 6 cifre):</label>
                 <OgInputOtp v-model="otpVal" :length="6" integerOnly />
-                <span class="demo-val-badge">Codice inserito: <strong>{{ otpVal || '...' }}</strong></span>
+                <span class="demo-val-badge">Codice digitato: <strong>{{ otpVal || '...' }}</strong></span>
+              </div>
+            </div>
+
+            <!-- OgFloatLabel Demo -->
+            <div v-else-if="activeComponent.id === 'floatlabel'" class="demo-box">
+              <div class="demo-field" style="padding-top: 1rem;">
+                <OgFloatLabel>
+                  <OgInputText id="fl-email" v-model="floatLabelVal" />
+                  <label for="fl-email">Indirizzo Email</label>
+                </OgFloatLabel>
+              </div>
+            </div>
+
+            <!-- OgInputGroup Demo -->
+            <div v-else-if="activeComponent.id === 'inputgroup'" class="demo-box">
+              <div class="demo-field" style="width: 22rem;">
+                <OgInputGroup>
+                  <OgInputGroupAddon>https://</OgInputGroupAddon>
+                  <OgInputText v-model="inputGroupVal" placeholder="dominio.com" fluid />
+                  <OgButton label="Check" severity="primary" />
+                </OgInputGroup>
               </div>
             </div>
 
@@ -265,15 +366,96 @@
             <div v-else-if="activeComponent.id === 'tree'" class="demo-box">
               <div class="demo-field">
                 <label>Albero gerarchico ricorsivo:</label>
-                <div style="padding: 1rem; border: 1px solid var(--og-border-color); border-radius: 8px; width: 18rem;">
+                <div style="padding: 1rem; border: 1px solid var(--og-border-color); border-radius: 8px; width: 18rem; background-color: #fff;">
                   <OgTree :value="treeData" />
                 </div>
               </div>
             </div>
 
+            <!-- OgCard Demo -->
+            <div v-else-if="activeComponent.id === 'card'" class="demo-box">
+              <OgCard title="Profilo Sviluppatore" subtitle="Frontend Engineer" style="width: 22rem;">
+                <template #content>
+                  <div style="display: flex; align-items: center; gap: 1rem;">
+                    <OgAvatar label="MR" size="large" shape="circle" />
+                    <div>
+                      <strong>Mario Rossi</strong>
+                      <p style="margin: 0; color: #64748b; font-size: 0.85rem;">mario.rossi@example.com</p>
+                    </div>
+                  </div>
+                </template>
+                <template #footer>
+                  <OgTag value="Pro Member" severity="success" rounded />
+                </template>
+              </OgCard>
+            </div>
+
+            <!-- OgAvatar Demo -->
+            <div v-else-if="activeComponent.id === 'avatar'" class="demo-box">
+              <div class="demo-row">
+                <OgAvatar label="SM" size="small" shape="circle" />
+                <OgAvatar label="MD" size="medium" shape="circle" />
+                <OgAvatar label="LG" size="large" shape="circle" />
+                <OgAvatar label="XL" size="xlarge" shape="square" />
+              </div>
+            </div>
+
+            <!-- OgBadge Demo -->
+            <div v-else-if="activeComponent.id === 'badge'" class="demo-box">
+              <div class="demo-row">
+                <OgBadge value="5" severity="primary" />
+                <OgBadge value="99+" severity="danger" />
+                <OgBadge value="New" severity="success" />
+                <OgBadge value="Warn" severity="warning" />
+              </div>
+            </div>
+
+            <!-- OgTag Demo -->
+            <div v-else-if="activeComponent.id === 'tag'" class="demo-box">
+              <div class="demo-row">
+                <OgTag value="Primary" severity="primary" />
+                <OgTag value="Successo" severity="success" rounded />
+                <OgTag value="Attenzione" severity="warning" />
+                <OgTag value="Pericolo" severity="danger" rounded />
+              </div>
+            </div>
+
+            <!-- OgChip Demo -->
+            <div v-else-if="activeComponent.id === 'chip'" class="demo-box">
+              <div class="demo-row">
+                <OgChip label="Vue.js" />
+                <OgChip label="TypeScript" removable />
+                <OgChip label="OptimusGUI" removable />
+              </div>
+            </div>
+
+            <!-- OgProgressBar Demo -->
+            <div v-else-if="activeComponent.id === 'progressbar'" class="demo-box" style="width: 22rem;">
+              <div class="demo-field" style="width: 100%;">
+                <label>Avanzamento del processo:</label>
+                <OgProgressBar :value="progressBarVal" />
+                <div class="demo-row" style="margin-top: 0.5rem;">
+                  <OgButton label="-10%" severity="secondary" size="small" @click="progressBarVal = Math.max(0, progressBarVal - 10)" />
+                  <OgButton label="+10%" severity="primary" size="small" @click="progressBarVal = Math.min(100, progressBarVal + 10)" />
+                </div>
+              </div>
+            </div>
+
+            <!-- OgSkeleton Demo -->
+            <div v-else-if="activeComponent.id === 'skeleton'" class="demo-box" style="width: 20rem;">
+              <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
+                <OgSkeleton shape="circle" width="3rem" height="3rem" />
+                <div style="flex: 1; display: flex; flex-direction: column; gap: 0.5rem;">
+                  <OgSkeleton width="60%" height="1.25rem" />
+                  <OgSkeleton width="90%" height="0.875rem" />
+                </div>
+              </div>
+              <OgSkeleton width="100%" height="4rem" />
+            </div>
+
             <!-- OgDialog Demo -->
             <div v-else-if="activeComponent.id === 'dialog'" class="demo-box">
-              <OgButton label="Apri Modale Dialog" severity="primary" @click="isDialogOpen = true" />
+              <OgButton label="Apri Finestra Modale" severity="primary" @click="isDialogOpen = true" />
               <OgDialog v-model:visible="isDialogOpen" header="Conferma Operazione" modal dismissableMask>
                 <p>Sei sicuro di voler procedere con le modifiche apportate?</p>
                 <template #footer>
@@ -297,23 +479,40 @@
             <div v-else-if="activeComponent.id === 'toast'" class="demo-box">
               <OgToast position="top-right" />
               <div class="demo-row">
-                <OgButton label="Toast Success" severity="success" @click="sendToast('success', 'Completato', 'Operazione riuscita con successo!')" />
-                <OgButton label="Toast Info" severity="info" @click="sendToast('info', 'Informazione', 'Nuovo aggiornamento disponibile.')" />
-                <OgButton label="Toast Error" severity="danger" @click="sendToast('error', 'Attenzione', 'Si è verificato un errore nel caricamento.')" />
+                <OgButton label="Toast Success" severity="success" @click="sendToast('success', 'Operazione riuscita', 'I dati sono stati salvati regolarmente.')" />
+                <OgButton label="Toast Info" severity="info" @click="sendToast('info', 'Notifica', 'Nuovo aggiornamento disponibile.')" />
+                <OgButton label="Toast Error" severity="danger" @click="sendToast('error', 'Attenzione', 'Errore nella sincronizzazione dei dati.')" />
               </div>
+            </div>
+
+            <!-- OgMessage Demo -->
+            <div v-else-if="activeComponent.id === 'message'" class="demo-box" style="width: 24rem;">
+              <div style="display: flex; flex-direction: column; gap: 0.75rem; width: 100%;">
+                <OgMessage severity="info">Informazione: il sistema effettuerà manutenzione stanotte.</OgMessage>
+                <OgMessage severity="success" closable>Salvataggio completato con successo.</OgMessage>
+                <OgMessage severity="warning">Attenzione: spazio di archiviazione in esaurimento.</OgMessage>
+                <OgMessage severity="danger" closable>Errore critico: connessione al database interrotta.</OgMessage>
+              </div>
+            </div>
+
+            <!-- OgPanel Demo -->
+            <div v-else-if="activeComponent.id === 'panel'" class="demo-box" style="width: 22rem;">
+              <OgPanel header="Pannello Impostazioni Avanzate" toggleable>
+                <p>Configurazione avanzata del server e delle autorizzazioni dell'account.</p>
+              </OgPanel>
             </div>
 
             <!-- OgTabs Demo -->
             <div v-else-if="activeComponent.id === 'tabs'" class="demo-box" style="width: 100%;">
               <OgTabs :value="0">
                 <OgTabPanel header="Dashboard">
-                  <p>Panoramica delle statistiche di utilizzo del sistema.</p>
+                  <p>Panoramica delle statistiche di utilizzo del sistema in tempo reale.</p>
                 </OgTabPanel>
                 <OgTabPanel header="Impostazioni">
-                  <p>Configurazione delle preferenze personali dell'account.</p>
+                  <p>Configurazione delle preferenze personali e notifiche.</p>
                 </OgTabPanel>
                 <OgTabPanel header="Sicurezza">
-                  <p>Gestione chiavi API e autenticazione a due fattori.</p>
+                  <p>Gestione chiavi API e autenticazione a due fattori (2FA).</p>
                 </OgTabPanel>
               </OgTabs>
             </div>
@@ -333,9 +532,63 @@
               </OgAccordion>
             </div>
 
-            <!-- Default Fallback Preview -->
-            <div v-else class="demo-box">
-              <p>Demo interattiva per <strong>{{ activeComponent.name }}</strong> in arrivo.</p>
+            <!-- OgStepper Demo -->
+            <div v-else-if="activeComponent.id === 'stepper'" class="demo-box" style="width: 100%;">
+              <OgStepper v-model:value="stepperStep" :steps="['Dati Anagrafici', 'Fatturazione', 'Riepilogo']">
+                <div style="padding: 1.5rem; text-align: center; border: 1px dashed #cbd5e1; border-radius: 8px;">
+                  <p v-if="stepperStep === 1">Passo 1: Inserisci il tuo nome ed email.</p>
+                  <p v-else-if="stepperStep === 2">Passo 2: Inserisci i dati di pagamento o partita IVA.</p>
+                  <p v-else>Passo 3: Conferma l'ordine e procedi all'attivazione.</p>
+                  <div style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem;">
+                    <OgButton label="Precedente" severity="secondary" :disabled="stepperStep === 1" @click="stepperStep--" />
+                    <OgButton label="Successivo" severity="primary" :disabled="stepperStep === 3" @click="stepperStep++" />
+                  </div>
+                </div>
+              </OgStepper>
+            </div>
+
+            <!-- OgMenu Demo -->
+            <div v-else-if="activeComponent.id === 'menu'" class="demo-box">
+              <div style="border: 1px solid var(--og-border-color); border-radius: 8px; overflow: hidden; width: 16rem;">
+                <OgMenu :model="menuItems" />
+              </div>
+            </div>
+
+            <!-- OgBreadcrumb Demo -->
+            <div v-else-if="activeComponent.id === 'breadcrumb'" class="demo-box">
+              <OgBreadcrumb :home="{ label: 'Home', url: '/' }" :model="breadcrumbs" />
+            </div>
+
+            <!-- OgSplitter Demo -->
+            <div v-else-if="activeComponent.id === 'splitter'" class="demo-box" style="width: 100%; height: 10rem;">
+              <OgSplitter layout="horizontal">
+                <OgSplitterPanel style="padding: 1rem; background-color: #f1f5f9; display: flex; align-items: center; justify-content: center;">
+                  Pannello Sinistro
+                </OgSplitterPanel>
+                <OgSplitterPanel style="padding: 1rem; background-color: #ffffff; display: flex; align-items: center; justify-content: center;">
+                  Pannello Destro
+                </OgSplitterPanel>
+              </OgSplitter>
+            </div>
+
+            <!-- OgToolbar Demo -->
+            <div v-else-if="activeComponent.id === 'toolbar'" class="demo-box" style="width: 100%;">
+              <OgToolbar>
+                <template #start>
+                  <OgButton label="Nuovo Record" severity="primary" size="small" />
+                  <OgButton label="Carica File" severity="secondary" size="small" style="margin-left: 0.5rem;" />
+                </template>
+                <template #end>
+                  <OgButton label="Esporta CSV" variant="outlined" size="small" />
+                </template>
+              </OgToolbar>
+            </div>
+
+            <!-- OgDivider Demo -->
+            <div v-else-if="activeComponent.id === 'divider'" class="demo-box" style="width: 20rem;">
+              <p style="margin: 0; text-align: center;">Sezione Superiore</p>
+              <OgDivider align="center">oppure</OgDivider>
+              <p style="margin: 0; text-align: center;">Sezione Inferiore</p>
             </div>
           </div>
         </div>
@@ -373,6 +626,11 @@
                 <td class="prop-default"><code>{{ prop.default }}</code></td>
                 <td class="prop-desc">{{ prop.description }}</td>
               </tr>
+              <tr v-if="activeComponent.props.length === 0">
+                <td colspan="4" style="text-align: center; color: #94a3b8; padding: 1.5rem;">
+                  Questo componente è un layout/wrapper e accetta contenuti tramite gli slot predefiniti.
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -387,27 +645,52 @@ import { componentsData, type ComponentDoc } from './componentsData';
 import {
   OgButton,
   OgInputText,
+  OgTextarea,
   OgInputNumber,
+  OgPassword,
   OgDatePicker,
   OgSelect,
   OgMultiSelect,
   OgRadioButton,
   OgCheckbox,
+  OgToggleSwitch,
+  OgToggleButton,
   OgSlider,
   OgRating,
+  OgColorPicker,
+  OgAutoComplete,
+  OgListbox,
+  OgSelectButton,
   OgInputOtp,
+  OgFloatLabel,
+  OgInputGroup,
+  OgInputGroupAddon,
   OgDataTable,
   OgColumn,
-  OgTag,
   OgTree,
+  OgCard,
+  OgAvatar,
+  OgBadge,
+  OgTag,
+  OgChip,
+  OgProgressBar,
+  OgSkeleton,
   OgDialog,
   OgDrawer,
   OgToast,
   useToast,
+  OgMessage,
+  OgPanel,
   OgTabs,
   OgTabPanel,
   OgAccordion,
   OgAccordionTab,
+  OgStepper,
+  OgMenu,
+  OgBreadcrumb,
+  OgSplitter,
+  OgSplitterPanel,
+  OgToolbar,
   OgDivider,
 } from '../src';
 
@@ -428,8 +711,20 @@ const btnSize = ref<'small' | 'medium' | 'large'>('medium');
 const btnLoading = ref(false);
 const btnDisabled = ref(false);
 
+// InputText demo state
+const inputTextVal = ref('Mario Rossi');
+const inputSize = ref<'small' | 'medium' | 'large'>('medium');
+const inputDisabled = ref(false);
+const inputInvalid = ref(false);
+
+// Textarea demo state
+const textareaVal = ref('OptimusGUI offre un design system elegante, minimalista e completamente personalizzabile via CSS.');
+
 // InputNumber demo state
 const inputNumVal = ref<number | null>(25);
+
+// Password demo state
+const passwordVal = ref('SuperSecretPass123!');
 
 // DatePicker demo state
 const dateVal = ref<Date | null>(new Date());
@@ -460,18 +755,68 @@ const radioChoice = ref('pro');
 // Checkbox demo state
 const chkVal = ref(true);
 
+// ToggleSwitch demo state
+const toggleSwitchVal = ref(true);
+
+// ToggleButton demo state
+const toggleBtnVal = ref(true);
+
 // Slider demo state
 const sliderVal = ref(60);
 
 // Rating demo state
 const ratingVal = ref(4);
 
+// ColorPicker demo state
+const colorPickerVal = ref('#0f172a');
+
+// AutoComplete demo state
+const autoCompleteVal = ref('');
+const allTech = ['Vue.js', 'Vite', 'TypeScript', 'Node.js', 'React', 'Angular', 'Tailwind', 'GraphQL', 'Next.js', 'Nuxt'];
+const filteredTech = ref<string[]>([]);
+const searchTech = (e: { query: string }) => {
+  filteredTech.value = allTech.filter((t) => t.toLowerCase().includes(e.query.toLowerCase()));
+};
+
+// Listbox demo state
+const listboxVal = ref('MIL');
+
+// SelectButton demo state
+const selectButtonVal = ref('Settimana');
+
 // InputOtp demo state
 const otpVal = ref('123456');
+
+// FloatLabel demo state
+const floatLabelVal = ref('');
+
+// InputGroup demo state
+const inputGroupVal = ref('my-website.com');
+
+// ProgressBar demo state
+const progressBarVal = ref(70);
+
+// Stepper demo state
+const stepperStep = ref(1);
 
 // Dialog & Drawer state
 const isDialogOpen = ref(false);
 const isDrawerOpen = ref(false);
+
+// Menu demo state
+const menuItems = [
+  { label: 'Dashboard', icon: 'pi pi-home' },
+  { label: 'Utenti', icon: 'pi pi-users' },
+  { separator: true },
+  { label: 'Impostazioni', icon: 'pi pi-cog' },
+];
+
+// Breadcrumb demo state
+const breadcrumbs = [
+  { label: 'Progetti', url: '/projects' },
+  { label: 'OptimusGUI', url: '/projects/optimus-gui' },
+  { label: 'Component Explorer' },
+];
 
 // DataTable demo state
 const tableData = ref([
@@ -782,6 +1127,7 @@ const copyCode = () => {
   flex-direction: column;
   gap: 1.5rem;
   align-items: center;
+  width: 100%;
 }
 .demo-row {
   display: flex;

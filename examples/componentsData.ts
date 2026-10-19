@@ -15,6 +15,7 @@ export interface ComponentDoc {
 }
 
 export const componentsData: ComponentDoc[] = [
+  // --- GENERAL ---
   {
     id: 'button',
     name: 'OgButton',
@@ -37,20 +38,37 @@ export const componentsData: ComponentDoc[] = [
 <OgButton label="Salva" severity="success" variant="outlined" />
 <OgButton label="In attesa" loading severity="info" />`,
   },
+
+  // --- FORM & INPUTS ---
   {
     id: 'inputtext',
     name: 'OgInputText',
     category: 'Form & Inputs',
-    description: 'Campo di testo minimale con gestione automatica di focus ring, validità e dimensioni.',
+    description: 'Campo di testo minimale con gestione automatica di focus ring, validità, dimensioni e fluidità.',
     props: [
       { name: 'modelValue', type: 'string', default: "''", description: 'Valore collegato tramite v-model.' },
       { name: 'placeholder', type: 'string', default: "''", description: 'Testo segnaposto.' },
       { name: 'size', type: "'small' | 'medium' | 'large'", default: "'medium'", description: 'Dimensione del campo input.' },
       { name: 'invalid', type: 'boolean', default: 'false', description: 'Applica lo stile di validazione fallita.' },
       { name: 'disabled', type: 'boolean', default: 'false', description: 'Disabilita il campo.' },
-      { name: 'fluid', type: 'boolean', default: 'false', description: 'Larghezza al 100%.' },
+      { name: 'fluid', type: 'boolean', default: 'false', description: 'Larghezza al 100% del genitore.' },
     ],
     defaultCode: `<OgInputText v-model="username" placeholder="Inserisci username..." />`,
+  },
+  {
+    id: 'textarea',
+    name: 'OgTextarea',
+    category: 'Form & Inputs',
+    description: 'Area di testo multilinea con ridimensionamento automatico (autoResize), gestione righe e focus ring.',
+    props: [
+      { name: 'modelValue', type: 'string', default: "''", description: 'Testo collegato tramite v-model.' },
+      { name: 'autoResize', type: 'boolean', default: 'false', description: 'Espande automaticamente l’altezza in base al testo.' },
+      { name: 'rows', type: 'number', default: '3', description: 'Numero iniziale di righe visibili.' },
+      { name: 'placeholder', type: 'string', default: "''", description: 'Testo segnaposto.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disabilita la modifica.' },
+      { name: 'invalid', type: 'boolean', default: 'false', description: 'Stato di errore validazione.' },
+    ],
+    defaultCode: `<OgTextarea v-model="bio" autoResize rows="3" placeholder="Scrivi una breve descrizione..." />`,
   },
   {
     id: 'inputnumber',
@@ -68,6 +86,19 @@ export const componentsData: ComponentDoc[] = [
       { name: 'suffix', type: 'string', default: "''", description: 'Suffisso posposto al numero (es. % o kg).' },
     ],
     defaultCode: `<OgInputNumber v-model="quantity" :min="0" :max="100" showButtons />`,
+  },
+  {
+    id: 'password',
+    name: 'OgPassword',
+    category: 'Form & Inputs',
+    description: 'Campo password sicuro con pulsante integrato per mostrare/nascondere la password (toggle mask).',
+    props: [
+      { name: 'modelValue', type: 'string', default: "''", description: 'Valore testuale della password.' },
+      { name: 'toggleMask', type: 'boolean', default: 'true', description: 'Abilita l’icona a occhio per rivelare la password.' },
+      { name: 'placeholder', type: 'string', default: "''", description: 'Testo segnaposto.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disabilita il campo.' },
+    ],
+    defaultCode: `<OgPassword v-model="pass" toggleMask placeholder="Inserisci password..." />`,
   },
   {
     id: 'datepicker',
@@ -166,6 +197,19 @@ export const componentsData: ComponentDoc[] = [
     defaultCode: `<OgToggleSwitch v-model="notificationsEnabled" />`,
   },
   {
+    id: 'togglebutton',
+    name: 'OgToggleButton',
+    category: 'Form & Inputs',
+    description: 'Pulsante di stato bistabile a due stati con etichette personalizzabili per stato ON e OFF.',
+    props: [
+      { name: 'modelValue', type: 'boolean', default: 'false', description: 'Stato booleano del pulsante.' },
+      { name: 'onLabel', type: 'string', default: "'Yes'", description: 'Testo mostrato quando attivo.' },
+      { name: 'offLabel', type: 'string', default: "'No'", description: 'Testo mostrato quando inattivo.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disabilita il pulsante.' },
+    ],
+    defaultCode: `<OgToggleButton v-model="isSubscribed" onLabel="Iscritto" offLabel="Non Iscritto" />`,
+  },
+  {
     id: 'slider',
     name: 'OgSlider',
     category: 'Form & Inputs',
@@ -193,6 +237,54 @@ export const componentsData: ComponentDoc[] = [
     defaultCode: `<OgRating v-model="feedbackScore" :stars="5" />`,
   },
   {
+    id: 'colorpicker',
+    name: 'OgColorPicker',
+    category: 'Form & Inputs',
+    description: 'Selettore colore minimalista con anteprima visiva del colore scelto ed emissione esadecimale.',
+    props: [
+      { name: 'modelValue', type: 'string', default: "'#0f172a'", description: 'Codice colore esadecimale (es. #0f172a).' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disabilita il selettore colore.' },
+    ],
+    defaultCode: `<OgColorPicker v-model="brandColor" />`,
+  },
+  {
+    id: 'autocomplete',
+    name: 'OgAutoComplete',
+    category: 'Form & Inputs',
+    description: 'Input con completamento automatico di suggerimenti durante la digitazione e selezione via tastiera.',
+    props: [
+      { name: 'modelValue', type: 'any', default: "''", description: 'Valore digitato o selezionato.' },
+      { name: 'suggestions', type: 'any[]', default: '[]', description: 'Array di suggerimenti visualizzati nel popover.' },
+      { name: 'placeholder', type: 'string', default: "''", description: 'Testo segnaposto.' },
+    ],
+    defaultCode: `<OgAutoComplete v-model="country" :suggestions="filteredCountries" @complete="search" />`,
+  },
+  {
+    id: 'listbox',
+    name: 'OgListbox',
+    category: 'Form & Inputs',
+    description: 'Lista di opzioni sempre visibile per la selezione rapida di elementi con scroll dedicato.',
+    props: [
+      { name: 'modelValue', type: 'any', default: 'undefined', description: 'Elemento correntemente selezionato.' },
+      { name: 'options', type: 'any[]', default: '[]', description: 'Lista delle opzioni selezionabili.' },
+      { name: 'optionLabel', type: 'string', default: "'label'", description: 'Proprietà etichetta.' },
+      { name: 'optionValue', type: 'string', default: "'value'", description: 'Proprietà valore.' },
+    ],
+    defaultCode: `<OgListbox v-model="selectedItem" :options="itemList" />`,
+  },
+  {
+    id: 'selectbutton',
+    name: 'OgSelectButton',
+    category: 'Form & Inputs',
+    description: 'Gruppo di pulsanti a segmenti per selezioni singole o multiple in stile toggle bar.',
+    props: [
+      { name: 'modelValue', type: 'any', default: 'undefined', description: 'Valore attivo o array di valori.' },
+      { name: 'options', type: 'any[]', default: '[]', description: 'Opzioni disponibili.' },
+      { name: 'multiple', type: 'boolean', default: 'false', description: 'Consente selezioni multiple simultanee.' },
+    ],
+    defaultCode: `<OgSelectButton v-model="selectedView" :options="['Mese', 'Anno', 'Totale']" />`,
+  },
+  {
     id: 'inputotp',
     name: 'OgInputOtp',
     category: 'Form & Inputs',
@@ -204,6 +296,31 @@ export const componentsData: ComponentDoc[] = [
     ],
     defaultCode: `<OgInputOtp v-model="otpCode" :length="6" integerOnly />`,
   },
+  {
+    id: 'floatlabel',
+    name: 'OgFloatLabel',
+    category: 'Form & Inputs',
+    description: 'Contenitore per input con etichetta fluttuante animata (Material/PrimeVue style).',
+    props: [],
+    defaultCode: `<OgFloatLabel>
+  <OgInputText id="user" v-model="username" />
+  <label for="user">Username</label>
+</OgFloatLabel>`,
+  },
+  {
+    id: 'inputgroup',
+    name: 'OgInputGroup',
+    category: 'Form & Inputs',
+    description: 'Raggruppa visivamente input con bottoni o etichette add-on (es. icone, valute o domini).',
+    props: [],
+    defaultCode: `<OgInputGroup>
+  <OgInputGroupAddon>https://</OgInputGroupAddon>
+  <OgInputText v-model="domain" placeholder="example.com" />
+  <OgButton label="Cerca" />
+</OgInputGroup>`,
+  },
+
+  // --- DATA DISPLAY ---
   {
     id: 'datatable',
     name: 'OgDataTable',
@@ -247,6 +364,81 @@ export const componentsData: ComponentDoc[] = [
   </template>
 </OgCard>`,
   },
+  {
+    id: 'avatar',
+    name: 'OgAvatar',
+    category: 'Data Display',
+    description: 'Immagine del profilo o badge con iniziali dell’utente, forma circolare o quadrata.',
+    props: [
+      { name: 'label', type: 'string', default: "''", description: 'Iniziali testuali mostrate in assenza di foto.' },
+      { name: 'image', type: 'string', default: "''", description: 'URL dell’immagine dell’avatar.' },
+      { name: 'size', type: "'small' | 'medium' | 'large' | 'xlarge'", default: "'medium'", description: 'Dimensione dell’avatar.' },
+      { name: 'shape', type: "'circle' | 'square'", default: "'square'", description: 'Forma del bordo (cerchio o quadrato).' },
+    ],
+    defaultCode: `<OgAvatar label="JD" size="large" shape="circle" />`,
+  },
+  {
+    id: 'badge',
+    name: 'OgBadge',
+    category: 'Data Display',
+    description: 'Piccolo indicatore numerico o di stato per notifiche ed eventi non letti.',
+    props: [
+      { name: 'value', type: 'string | number', default: "''", description: 'Numero o testo contenuto nel badge.' },
+      { name: 'severity', type: 'OgSeverity', default: "'primary'", description: 'Colore semantico di stato.' },
+      { name: 'size', type: "'small' | 'large'", default: 'undefined', description: 'Dimensione del badge.' },
+    ],
+    defaultCode: `<OgBadge value="8" severity="danger" />`,
+  },
+  {
+    id: 'tag',
+    name: 'OgTag',
+    category: 'Data Display',
+    description: 'Etichetta di categorizzazione visiva per taggare entità o stati di lavorazione.',
+    props: [
+      { name: 'value', type: 'string', default: "''", description: 'Testo dell’etichetta.' },
+      { name: 'severity', type: 'OgSeverity', default: "'primary'", description: 'Colore semantico del tag.' },
+      { name: 'rounded', type: 'boolean', default: 'false', description: 'Bordi completamente arrotondati.' },
+    ],
+    defaultCode: `<OgTag value="In Lavorazione" severity="warning" rounded />`,
+  },
+  {
+    id: 'chip',
+    name: 'OgChip',
+    category: 'Data Display',
+    description: 'Elemento compatto interattivo rappresentante un contatto, filtro o entità con opzione di rimozione.',
+    props: [
+      { name: 'label', type: 'string', default: "''", description: 'Testo visualizzato nel chip.' },
+      { name: 'removable', type: 'boolean', default: 'false', description: 'Mostra il pulsante a croce per rimuovere il chip.' },
+    ],
+    defaultCode: `<OgChip label="Filtro Attivo" removable @remove="handleRemove" />`,
+  },
+  {
+    id: 'progressbar',
+    name: 'OgProgressBar',
+    category: 'Data Display',
+    description: 'Barra di avanzamento lineare con modalità determinata (0-100%) o indeterminata continua.',
+    props: [
+      { name: 'value', type: 'number', default: '0', description: 'Percentuale completata (0-100).' },
+      { name: 'showValue', type: 'boolean', default: 'true', description: 'Mostra la percentuale numerica interna.' },
+      { name: 'mode', type: "'determinate' | 'indeterminate'", default: "'determinate'", description: 'Modalità di avanzamento.' },
+    ],
+    defaultCode: `<OgProgressBar :value="75" />`,
+  },
+  {
+    id: 'skeleton',
+    name: 'OgSkeleton',
+    category: 'Data Display',
+    description: 'Placeholder di caricamento animato per migliorare la percezione di velocità (skeleton loader).',
+    props: [
+      { name: 'shape', type: "'rectangle' | 'circle'", default: "'rectangle'", description: 'Forma dello scheletro.' },
+      { name: 'width', type: 'string', default: "'100%'", description: 'Larghezza CSS personalizzata.' },
+      { name: 'height', type: 'string', default: "'1rem'", description: 'Altezza CSS personalizzata.' },
+    ],
+    defaultCode: `<OgSkeleton width="10rem" height="2rem" />
+<OgSkeleton shape="circle" width="3rem" height="3rem" />`,
+  },
+
+  // --- OVERLAYS & FEEDBACK ---
   {
     id: 'dialog',
     name: 'OgDialog',
@@ -297,6 +489,32 @@ const toast = useToast();
 toast.add({ severity: 'success', summary: 'Ottimo!', detail: 'Operazione completata con successo.', life: 3000 });`,
   },
   {
+    id: 'message',
+    name: 'OgMessage',
+    category: 'Overlays & Feedback',
+    description: 'Banner inline informativo o di avviso per form o sezioni con testo e opzione di chiusura.',
+    props: [
+      { name: 'severity', type: 'OgSeverity', default: "'info'", description: 'Severità del messaggio (info, success, warning, danger).' },
+      { name: 'closable', type: 'boolean', default: 'false', description: 'Mostra l’icona di chiusura sul banner.' },
+    ],
+    defaultCode: `<OgMessage severity="warning">Attenzione: aggiorna il tuo profilo entro oggi.</OgMessage>`,
+  },
+  {
+    id: 'panel',
+    name: 'OgPanel',
+    category: 'Overlays & Feedback',
+    description: 'Contenitore con intestazione strutturata e possibilità di collassare il contenuto.',
+    props: [
+      { name: 'header', type: 'string', default: "''", description: 'Titolo del pannello.' },
+      { name: 'toggleable', type: 'boolean', default: 'false', description: 'Rende il pannello collassabile dall’utente.' },
+    ],
+    defaultCode: `<OgPanel header="Impostazioni Avanzate" toggleable>
+  <p>Opzioni di configurazione server e timeout.</p>
+</OgPanel>`,
+  },
+
+  // --- NAVIGATION & LAYOUT ---
+  {
     id: 'tabs',
     name: 'OgTabs',
     category: 'Navigation & Layout',
@@ -322,5 +540,78 @@ toast.add({ severity: 'success', summary: 'Ottimo!', detail: 'Operazione complet
   <OgAccordionTab header="Domanda Frequente 1">Risposta 1</OgAccordionTab>
   <OgAccordionTab header="Domanda Frequente 2">Risposta 2</OgAccordionTab>
 </OgAccordion>`,
+  },
+  {
+    id: 'stepper',
+    name: 'OgStepper',
+    category: 'Navigation & Layout',
+    description: 'Guida passo-passo a stati sequenziali per wizard e procedure di checkout.',
+    props: [
+      { name: 'value', type: 'number', default: '1', description: 'Step attualmente attivo (1-based).' },
+      { name: 'steps', type: 'string[]', default: "['Step 1', 'Step 2', 'Step 3']", description: 'Titoli dei passaggi sequenziali.' },
+    ],
+    defaultCode: `<OgStepper v-model:value="currentStep" :steps="['Dati', 'Pagamento', 'Conferma']">
+  <p>Sei allo step {{ currentStep }}</p>
+</OgStepper>`,
+  },
+  {
+    id: 'menu',
+    name: 'OgMenu',
+    category: 'Navigation & Layout',
+    description: 'Menu verticale di navigazione con voci, icone, comandi e separatori.',
+    props: [
+      { name: 'model', type: 'MenuItem[]', default: '[]', description: 'Voci del menu (label, icon, url, command).' },
+    ],
+    defaultCode: `<OgMenu :model="menuItems" />`,
+  },
+  {
+    id: 'breadcrumb',
+    name: 'OgBreadcrumb',
+    category: 'Navigation & Layout',
+    description: 'Traccia di navigazione a briciole di pane per orientare la posizione dell’utente nella gerarchia.',
+    props: [
+      { name: 'home', type: 'object', default: 'undefined', description: 'Elemento home principale.' },
+      { name: 'model', type: 'any[]', default: '[]', description: 'Sequenza dei percorsi precedenti.' },
+    ],
+    defaultCode: `<OgBreadcrumb :home="{ icon: 'pi pi-home', url: '/' }" :model="breadcrumbs" />`,
+  },
+  {
+    id: 'splitter',
+    name: 'OgSplitter',
+    category: 'Navigation & Layout',
+    description: 'Contenitore a layout diviso in sezioni multiple affiancate orizzontalmente o verticalmente.',
+    props: [
+      { name: 'layout', type: "'horizontal' | 'vertical'", default: "'horizontal'", description: 'Orientamento della suddivisione.' },
+    ],
+    defaultCode: `<OgSplitter layout="horizontal">
+  <OgSplitterPanel>Pannello Sinistro</OgSplitterPanel>
+  <OgSplitterPanel>Pannello Destro</OgSplitterPanel>
+</OgSplitter>`,
+  },
+  {
+    id: 'toolbar',
+    name: 'OgToolbar',
+    category: 'Navigation & Layout',
+    description: 'Barra degli strumenti per raggruppare comandi e pulsanti suddivisi in sezioni sinistra, centro e destra.',
+    props: [],
+    defaultCode: `<OgToolbar>
+  <template #start>
+    <OgButton label="Nuovo" severity="primary" />
+  </template>
+  <template #end>
+    <OgButton label="Esporta" variant="outlined" />
+  </template>
+</OgToolbar>`,
+  },
+  {
+    id: 'divider',
+    name: 'OgDivider',
+    category: 'Navigation & Layout',
+    description: 'Separatore visuale orizzontale o verticale con supporto per etichette centrali o allineate.',
+    props: [
+      { name: 'layout', type: "'horizontal' | 'vertical'", default: "'horizontal'", description: 'Orientamento della linea.' },
+      { name: 'align', type: "'left' | 'center' | 'right'", default: "'center'", description: 'Allineamento del testo.' },
+    ],
+    defaultCode: `<OgDivider align="center">oppure</OgDivider>`,
   },
 ];
