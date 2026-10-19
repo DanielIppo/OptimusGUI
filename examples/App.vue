@@ -194,8 +194,26 @@
             <!-- OgMultiSelect Demo -->
             <div v-else-if="activeComponent.id === 'multiselect'" class="demo-box">
               <div class="demo-field">
-                <label>MultiSelect con checkbox OptimusGUI integrati:</label>
-                <OgMultiSelect v-model="multiVal" :options="countriesList" optionLabel="name" optionValue="code" placeholder="Seleziona nazioni..." />
+                <label>MultiSelect con ricerca (filter), reset rapido (showClear) e checkbox OptimusGUI integrati:</label>
+                <div style="display: flex; gap: 1.25rem; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap;">
+                  <label class="demo-choice">
+                    <OgCheckbox v-model="multiFilter" binary />
+                    <span>Filtro ricerca (filter)</span>
+                  </label>
+                  <label class="demo-choice">
+                    <OgCheckbox v-model="multiShowClear" binary />
+                    <span>Pulsante reset (showClear)</span>
+                  </label>
+                </div>
+                <OgMultiSelect
+                  v-model="multiVal"
+                  :options="countriesList"
+                  optionLabel="name"
+                  optionValue="code"
+                  placeholder="Seleziona nazioni..."
+                  :filter="multiFilter"
+                  :showClear="multiShowClear"
+                />
                 <span class="demo-val-badge">Selezionati: <strong>{{ multiVal.join(', ') || 'Nessuno' }}</strong></span>
               </div>
             </div>
@@ -741,6 +759,8 @@ const citiesList = [
 
 // MultiSelect demo state
 const multiVal = ref(['ITA', 'FRA']);
+const multiFilter = ref(true);
+const multiShowClear = ref(true);
 const countriesList = [
   { name: 'Italia', code: 'ITA' },
   { name: 'Francia', code: 'FRA' },

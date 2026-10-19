@@ -143,18 +143,29 @@ export const componentsData: ComponentDoc[] = [
     id: 'multiselect',
     name: 'OgMultiSelect',
     category: 'Form & Inputs',
-    description: 'Menu a tendina a selezione multipla con checkbox OptimusGUI integrati e chiusura click-outside.',
+    description: 'Menu a tendina a selezione multipla con filtro di ricerca opzionale, reset rapido e checkbox OptimusGUI integrati.',
     props: [
       { name: 'modelValue', type: 'any[]', default: '[]', description: 'Array di valori selezionati.' },
       { name: 'options', type: 'any[]', default: '[]', description: 'Lista delle opzioni disponibili.' },
       { name: 'optionLabel', type: 'string', default: "'label'", description: 'Proprietà per l’etichetta testuale.' },
       { name: 'optionValue', type: 'string', default: "'value'", description: 'Proprietà per il valore.' },
       { name: 'placeholder', type: 'string', default: "'Select items'", description: 'Segnaposto prima della selezione.' },
+      { name: 'filter', type: 'boolean', default: 'false', description: 'Abilita il campo di ricerca interno per filtrare le voci.' },
+      { name: 'filterPlaceholder', type: 'string', default: "'Search...'", description: 'Testo segnaposto dell’input di ricerca.' },
+      { name: 'showClear', type: 'boolean', default: 'false', description: 'Mostra il pulsante per deselezionare tutto con un click.' },
+      { name: 'emptyMessage', type: 'string', default: "'No options found'", description: 'Messaggio mostrato quando nessun elemento corrisponde al filtro.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disabilita l’interazione con il componente.' },
+      { name: 'invalid', type: 'boolean', default: 'false', description: 'Stato di errore con bordo evidenziato.' },
+      { name: 'fluid', type: 'boolean', default: 'false', description: 'Occupa l’intera larghezza del genitore (width: 100%).' },
     ],
     defaultCode: `<OgMultiSelect
   v-model="selectedSkills"
   :options="skills"
+  optionLabel="name"
+  optionValue="code"
   placeholder="Seleziona competenze..."
+  filter
+  showClear
 />`,
   },
   {
