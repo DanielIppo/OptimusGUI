@@ -1,0 +1,14 @@
+/**
+ * OptimusGUI Indigo Theme Preset
+ */
+
+:root {
+  --og-color-primary-50: #eef2ff;
+  --og-color-primary-100: #e0e7ff;
+  --og-color-primary-500: #6366f1;
+  --og-color-primary-600: #4f46e5;
+  --og-color-primary-contrast: #ffffff;
+
+  --og-border-color-focus: #6366f1;
+  --og-focus-ring-color: rgba(99, 102, 241, 0.2);
+}

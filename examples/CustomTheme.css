@@ -1,0 +1,18 @@
+/**
+ * Custom Parent Project Theme for OptimusGUI
+ * Import this file in your main.ts AFTER 'optimus-gui/style.css'
+ */
+
+:root {
+  /* Change primary accent to Violet / Emerald */
+  --og-color-primary-500: #8b5cf6;
+  --og-color-primary-600: #7c3aed;
+  --og-color-primary-contrast: #ffffff;
+
+  /* Custom Border Radius */
+  --og-radius-md: 0.75rem;
+  --og-radius-lg: 1rem;
+
+  /* Typography */
+  --og-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
