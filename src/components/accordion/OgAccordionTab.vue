@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref } from 'vue';
+import { computed, inject, ref, onUnmounted } from 'vue';
 
 defineOptions({
   name: 'OgAccordionTab',
@@ -30,25 +30,37 @@ const props = withDefaults(defineProps<OgAccordionTabProps>(), {
 });
 
 const accordion = inject<any>('ogAccordion', null);
-const index = ref<number>(-1);
+const tabId = ref<number>(-1);
+let tabHandle: any = null;
+
+if (accordion) {
+  tabHandle = accordion.registerTab();
+  tabId.value = tabHandle.id;
+}
+
+onUnmounted(() => {
+  if (tabHandle) {
+    tabHandle.unregister();
+  }
+});
+
+const tabIndex = computed(() => {
+  if (!accordion) return -1;
+  return accordion.registeredTabs.value.indexOf(tabId.value);
+});
 
 const isActive = computed(() => {
-  if (!accordion) return false;
+  if (!accordion || tabIndex.value === -1) return false;
   if (accordion.multiple) {
-    return Array.isArray(accordion.activeValue.value) && accordion.activeValue.value.includes(index.value);
+    return Array.isArray(accordion.activeValue.value) && accordion.activeValue.value.includes(tabIndex.value);
   }
-  return accordion.activeValue.value === index.value;
+  return accordion.activeValue.value === tabIndex.value;
 });
 
 const onHeaderClick = () => {
-  if (props.disabled || !accordion) return;
-  accordion.toggleTab(index.value);
+  if (props.disabled || !accordion || tabIndex.value === -1) return;
+  accordion.toggleTab(tabIndex.value);
 };
-
-// Register tab with parent accordion
-if (accordion) {
-  index.value = accordion.registerTab();
-}
 </script>
 
 <style scoped>

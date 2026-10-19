@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref } from 'vue';
+import { computed, inject, ref, watch, onUnmounted } from 'vue';
 
 defineOptions({
   name: 'OgTabPanel',
@@ -21,19 +21,41 @@ const props = withDefaults(defineProps<OgTabPanelProps>(), {
 });
 
 const tabs = inject<any>('ogTabs', null);
-const index = ref<number>(-1);
-
-const isActive = computed(() => {
-  if (!tabs) return false;
-  return tabs.activeValue.value === index.value;
-});
+const tabId = ref<number>(-1);
+let tabHandle: any = null;
 
 if (tabs) {
-  index.value = tabs.registerTab({
+  tabHandle = tabs.registerTab({
     header: props.header,
     disabled: props.disabled,
   });
+  tabId.value = tabHandle.id;
 }
+
+watch(
+  () => [props.header, props.disabled],
+  () => {
+    if (tabHandle) {
+      tabHandle.update({ header: props.header, disabled: props.disabled });
+    }
+  }
+);
+
+onUnmounted(() => {
+  if (tabHandle) {
+    tabHandle.unregister();
+  }
+});
+
+const tabIndex = computed(() => {
+  if (!tabs) return -1;
+  return tabs.registeredTabs.value.findIndex((t: any) => t.id === tabId.value);
+});
+
+const isActive = computed(() => {
+  if (!tabs) return false;
+  return tabs.activeValue.value === tabIndex.value;
+});
 </script>
 
 <style scoped>

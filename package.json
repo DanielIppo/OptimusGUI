@@ -18,10 +18,14 @@
   "files": [
     "dist"
   ],
+  "sideEffects": [
+    "*.css",
+    "**/*.css"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build && npm run copy-themes",
-    "copy-themes": "mkdir -p dist/themes && cp -r src/theme/presets/* dist/themes/",
+    "copy-themes": "node scripts/copy-themes.js",
     "type-check": "vue-tsc --noEmit"
   },
   "peerDependencies": {

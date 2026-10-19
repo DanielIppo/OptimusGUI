@@ -1,25 +1,28 @@
-import { ref, computed } from 'vue';
+import { ref, computed, toValue, type MaybeRefOrGetter } from 'vue';
 
 export interface UseDataTableOptions {
-  value: any[];
-  paginator?: boolean;
-  rows?: number;
-  dataKey?: string;
+  value: MaybeRefOrGetter<any[]>;
+  paginator?: MaybeRefOrGetter<boolean | undefined>;
+  rows?: MaybeRefOrGetter<number | undefined>;
+  dataKey?: MaybeRefOrGetter<string | undefined>;
 }
 
 export function useDataTable(options: UseDataTableOptions) {
   const currentPage = ref(0);
-  const rowsPerPage = ref(options.rows || 10);
+  const rowsPerPage = computed(() => toValue(options.rows) || 10);
   const sortField = ref<string | null>(null);
   const sortOrder = ref<number>(1); // 1 = asc, -1 = desc
   const selectedRows = ref<any[]>([]);
 
-  const totalRecords = computed(() => options.value.length);
+  const rawData = computed(() => toValue(options.value) || []);
+  const isPaginator = computed(() => !!toValue(options.paginator));
+  const totalRecords = computed(() => rawData.value.length);
 
   const sortedData = computed(() => {
-    if (!sortField.value) return options.value;
+    const data = rawData.value;
+    if (!sortField.value) return data;
     const field = sortField.value;
-    return [...options.value].sort((a, b) => {
+    return [...data].sort((a, b) => {
       const valA = a[field];
       const valB = b[field];
       if (valA === valB) return 0;
@@ -30,7 +33,7 @@ export function useDataTable(options: UseDataTableOptions) {
   });
 
   const paginatedData = computed(() => {
-    if (!options.paginator) return sortedData.value;
+    if (!isPaginator.value) return sortedData.value;
     const start = currentPage.value * rowsPerPage.value;
     return sortedData.value.slice(start, start + rowsPerPage.value);
   });

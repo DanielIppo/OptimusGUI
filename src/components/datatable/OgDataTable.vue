@@ -136,17 +136,31 @@ const {
   sort: handleSort,
   setPage,
 } = useDataTable({
-  value: props.value,
-  paginator: props.paginator,
-  rows: props.rows,
-  dataKey: props.dataKey,
+  value: () => props.value,
+  paginator: () => props.paginator,
+  rows: () => props.rows,
+  dataKey: () => props.dataKey,
 });
 
-const totalPages = computed(() => Math.ceil(props.value.length / props.rows));
+const totalPages = computed(() => {
+  const rowCount = props.rows || 10;
+  return Math.ceil((props.value?.length || 0) / rowCount);
+});
 
 const columns = computed(() => {
   const defaultSlot = slots.default ? slots.default() : [];
-  return defaultSlot.map((vnode: any) => ({
+  const flatNodes: any[] = [];
+  const flatten = (nodes: any[]) => {
+    nodes.forEach((node) => {
+      if (Array.isArray(node.children) && typeof node.type === 'symbol') {
+        flatten(node.children);
+      } else if (node.props) {
+        flatNodes.push(node);
+      }
+    });
+  };
+  flatten(defaultSlot);
+  return flatNodes.map((vnode: any) => ({
     props: vnode.props,
     children: vnode.children,
   }));

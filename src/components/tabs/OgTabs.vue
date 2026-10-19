@@ -4,7 +4,7 @@
       <div class="og-tabs__nav" role="tablist">
         <button
           v-for="(tab, idx) in registeredTabs"
-          :key="idx"
+          :key="tab.id"
           type="button"
           role="tab"
           :aria-selected="activeValue === idx"
@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { provide, ref, watch } from 'vue';
+import { provide, ref, reactive, watch } from 'vue';
 
 defineOptions({
   name: 'OgTabs',
@@ -49,7 +49,8 @@ const emit = defineEmits<{
 }>();
 
 const activeValue = ref<number>(props.value);
-const registeredTabs = ref<Array<{ header?: string; disabled?: boolean }>>([]);
+const registeredTabs = ref<Array<{ id: number; header?: string; disabled?: boolean }>>([]);
+let nextId = 0;
 
 watch(
   () => props.value,
@@ -59,9 +60,20 @@ watch(
 );
 
 const registerTab = (tabData: { header?: string; disabled?: boolean }) => {
-  const index = registeredTabs.value.length;
-  registeredTabs.value.push(tabData);
-  return index;
+  const id = nextId++;
+  const tabItem = reactive({ id, header: tabData.header, disabled: tabData.disabled });
+  registeredTabs.value.push(tabItem);
+
+  return {
+    id,
+    update: (data: { header?: string; disabled?: boolean }) => {
+      tabItem.header = data.header;
+      tabItem.disabled = data.disabled;
+    },
+    unregister: () => {
+      registeredTabs.value = registeredTabs.value.filter((t) => t.id !== id);
+    },
+  };
 };
 
 const selectTab = (index: number, disabled?: boolean) => {
@@ -73,6 +85,7 @@ const selectTab = (index: number, disabled?: boolean) => {
 
 provide('ogTabs', {
   activeValue,
+  registeredTabs,
   registerTab,
 });
 </script>

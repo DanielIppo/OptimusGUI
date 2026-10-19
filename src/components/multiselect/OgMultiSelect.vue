@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, nextTick, onMounted, onUnmounted } from 'vue';
+import { computed, ref, watch, nextTick, onMounted, onUnmounted } from 'vue';
 
 defineOptions({
   name: 'OgMultiSelect',
@@ -129,8 +129,25 @@ const handleClickOutside = (e: MouseEvent) => {
   }
 };
 
-onMounted(() => document.addEventListener('click', handleClickOutside));
-onUnmounted(() => document.removeEventListener('click', handleClickOutside));
+watch(isOpen, (newVal) => {
+  if (newVal) {
+    window.addEventListener('resize', updateOverlayPosition);
+    window.addEventListener('scroll', updateOverlayPosition, true);
+  } else {
+    window.removeEventListener('resize', updateOverlayPosition);
+    window.removeEventListener('scroll', updateOverlayPosition, true);
+  }
+});
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+  window.removeEventListener('resize', updateOverlayPosition);
+  window.removeEventListener('scroll', updateOverlayPosition, true);
+});
 </script>
 
 <style scoped>

@@ -1,10 +1,6 @@
-export interface TreeNode {
-    key?: string;
-    label?: string;
-    children?: TreeNode[];
-    icon?: string;
-    [key: string]: any;
-}
+import { TreeNode } from './OgTreeNode.vue';
+
+export type { TreeNode };
 export interface OgTreeProps {
     value?: TreeNode[];
 }

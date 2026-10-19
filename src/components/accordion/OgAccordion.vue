@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, provide, ref, watch } from 'vue';
+import { provide, ref, watch } from 'vue';
 
 defineOptions({
   name: 'OgAccordion',
@@ -28,7 +28,8 @@ const emit = defineEmits<{
 }>();
 
 const activeValue = ref<number | number[] | null>(props.value ?? (props.multiple ? [] : null));
-let tabCount = 0;
+const registeredTabs = ref<number[]>([]);
+let nextId = 0;
 
 watch(
   () => props.value,
@@ -38,9 +39,14 @@ watch(
 );
 
 const registerTab = () => {
-  const currentIndex = tabCount;
-  tabCount++;
-  return currentIndex;
+  const id = nextId++;
+  registeredTabs.value.push(id);
+  return {
+    id,
+    unregister: () => {
+      registeredTabs.value = registeredTabs.value.filter((i) => i !== id);
+    },
+  };
 };
 
 const toggleTab = (index: number) => {
@@ -71,6 +77,7 @@ const toggleTab = (index: number) => {
 provide('ogAccordion', {
   multiple: props.multiple,
   activeValue,
+  registeredTabs,
   registerTab,
   toggleTab,
 });

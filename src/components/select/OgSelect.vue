@@ -157,16 +157,17 @@ const {
   toggle,
   close,
 } = useSelect({
-  options: props.options,
-  optionLabel: props.optionLabel,
-  optionValue: props.optionValue,
-  optionDisabled: props.optionDisabled,
-  filter: props.filter,
+  options: () => props.options,
+  optionLabel: () => props.optionLabel,
+  optionValue: () => props.optionValue,
+  optionDisabled: () => props.optionDisabled,
+  filter: () => props.filter,
 });
 
 const selectedOption = computed(() => {
   if (props.modelValue === null || props.modelValue === undefined) return null;
-  return props.options.find((opt) => getOptionValue(opt) === props.modelValue) ?? props.modelValue;
+  const list = props.options || [];
+  return list.find((opt) => getOptionValue(opt) === props.modelValue) ?? props.modelValue;
 });
 
 const selectedLabel = computed(() => {

@@ -1,5 +1,5 @@
 <template>
-  <div :class="sliderClasses" @click="onClick">
+  <div ref="sliderRef" :class="sliderClasses" @mousedown="onPointerDown" @touchstart.passive="onPointerDown">
     <div class="og-slider__track">
       <div class="og-slider__range" :style="rangeStyle" />
       <div
@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref, onUnmounted } from 'vue';
 
 defineOptions({
   name: 'OgSlider',
@@ -44,6 +44,8 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: number): void;
   (e: 'change', value: number): void;
 }>();
+
+const sliderRef = ref<HTMLElement | null>(null);
 
 const percentage = computed(() => {
   const range = props.max - props.min;
@@ -76,20 +78,49 @@ const updateValue = (newVal: number) => {
 const increment = () => updateValue(props.modelValue + props.step);
 const decrement = () => updateValue(props.modelValue - props.step);
 
-const onClick = (event: MouseEvent) => {
-  if (props.disabled) return;
-  const target = event.currentTarget as HTMLElement;
-  const rect = target.getBoundingClientRect();
+const updateFromPointer = (clientX: number, clientY: number) => {
+  if (!sliderRef.value || props.disabled) return;
+  const rect = sliderRef.value.getBoundingClientRect();
   let ratio = 0;
   if (props.orientation === 'vertical') {
-    ratio = (rect.bottom - event.clientY) / rect.height;
+    ratio = (rect.bottom - clientY) / rect.height;
   } else {
-    ratio = (event.clientX - rect.left) / rect.width;
+    ratio = (clientX - rect.left) / rect.width;
   }
+  ratio = Math.max(0, Math.min(1, ratio));
   const raw = props.min + ratio * (props.max - props.min);
   const stepped = Math.round(raw / props.step) * props.step;
   updateValue(stepped);
 };
+
+const onPointerMove = (e: MouseEvent | TouchEvent) => {
+  const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+  const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+  updateFromPointer(clientX, clientY);
+};
+
+const onPointerUp = () => {
+  window.removeEventListener('mousemove', onPointerMove);
+  window.removeEventListener('mouseup', onPointerUp);
+  window.removeEventListener('touchmove', onPointerMove);
+  window.removeEventListener('touchend', onPointerUp);
+};
+
+const onPointerDown = (event: MouseEvent | TouchEvent) => {
+  if (props.disabled) return;
+  const clientX = 'touches' in event ? event.touches[0].clientX : event.clientX;
+  const clientY = 'touches' in event ? event.touches[0].clientY : event.clientY;
+  updateFromPointer(clientX, clientY);
+
+  window.addEventListener('mousemove', onPointerMove);
+  window.addEventListener('mouseup', onPointerUp);
+  window.addEventListener('touchmove', onPointerMove);
+  window.addEventListener('touchend', onPointerUp);
+};
+
+onUnmounted(() => {
+  onPointerUp();
+});
 
 const sliderClasses = computed(() => [
   'og-slider',

@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue';
+import { ref, computed, toValue, type MaybeRefOrGetter } from 'vue';
 
 export interface SelectOption {
   label?: string;
@@ -8,12 +8,12 @@ export interface SelectOption {
 }
 
 export interface UseSelectOptions {
-  options: SelectOption[] | any[];
-  optionLabel?: string;
-  optionValue?: string;
-  optionDisabled?: string;
-  filter?: boolean;
-  filterBy?: string;
+  options: MaybeRefOrGetter<SelectOption[] | any[]>;
+  optionLabel?: MaybeRefOrGetter<string | undefined>;
+  optionValue?: MaybeRefOrGetter<string | undefined>;
+  optionDisabled?: MaybeRefOrGetter<string | undefined>;
+  filter?: MaybeRefOrGetter<boolean | undefined>;
+  filterBy?: MaybeRefOrGetter<string | undefined>;
 }
 
 export function useSelect(config: UseSelectOptions) {
@@ -23,15 +23,17 @@ export function useSelect(config: UseSelectOptions) {
 
   const getOptionLabel = (option: any): string => {
     if (typeof option === 'object' && option !== null) {
-      if (config.optionLabel) return option[config.optionLabel];
+      const optLabelKey = toValue(config.optionLabel);
+      if (optLabelKey && optLabelKey in option) return option[optLabelKey];
       if ('label' in option) return option.label;
     }
-    return String(option);
+    return String(option ?? '');
   };
 
   const getOptionValue = (option: any): any => {
     if (typeof option === 'object' && option !== null) {
-      if (config.optionValue) return option[config.optionValue];
+      const optValKey = toValue(config.optionValue);
+      if (optValKey && optValKey in option) return option[optValKey];
       if ('value' in option) return option.value;
     }
     return option;
@@ -39,18 +41,23 @@ export function useSelect(config: UseSelectOptions) {
 
   const isOptionDisabled = (option: any): boolean => {
     if (typeof option === 'object' && option !== null) {
-      if (config.optionDisabled) return !!option[config.optionDisabled];
+      const optDisKey = toValue(config.optionDisabled);
+      if (optDisKey && optDisKey in option) return !!option[optDisKey];
       if ('disabled' in option) return !!option.disabled;
     }
     return false;
   };
 
+  const rawOptions = computed(() => toValue(config.options) || []);
+
   const filteredOptions = computed(() => {
-    if (!config.filter || !filterQuery.value.trim()) {
-      return config.options;
+    const list = rawOptions.value;
+    const isFilterActive = toValue(config.filter);
+    if (!isFilterActive || !filterQuery.value.trim()) {
+      return list;
     }
     const query = filterQuery.value.toLowerCase();
-    return config.options.filter((opt) => {
+    return list.filter((opt) => {
       const label = getOptionLabel(opt).toLowerCase();
       return label.includes(query);
     });
@@ -78,6 +85,7 @@ export function useSelect(config: UseSelectOptions) {
     isOpen,
     filterQuery,
     focusedIndex,
+    rawOptions,
     filteredOptions,
     getOptionLabel,
     getOptionValue,

@@ -77,7 +77,7 @@ const isChecked = computed(() => {
 
 const onClick = (event: MouseEvent) => {
   if (props.disabled || props.readonly) return;
-  event.stopPropagation();
+  emit('click' as any, event);
 };
 
 const onChange = (event: Event) => {

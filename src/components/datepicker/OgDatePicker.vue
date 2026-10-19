@@ -37,15 +37,23 @@ const emit = defineEmits<{
 const formattedValue = computed(() => {
   if (!props.modelValue) return '';
   if (props.modelValue instanceof Date) {
-    return props.modelValue.toISOString().split('T')[0];
+    const y = props.modelValue.getFullYear();
+    const m = String(props.modelValue.getMonth() + 1).padStart(2, '0');
+    const d = String(props.modelValue.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
   }
   return String(props.modelValue);
 });
 
 const onInput = (e: Event) => {
   const target = e.target as HTMLInputElement;
-  const val = target.value ? new Date(target.value) : null;
-  emit('update:modelValue', val);
+  if (!target.value) {
+    emit('update:modelValue', null);
+  } else {
+    const [y, m, d] = target.value.split('-').map(Number);
+    const date = new Date(y, m - 1, d);
+    emit('update:modelValue', date);
+  }
   emit('change', e);
 };
 </script>

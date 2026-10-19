@@ -11,6 +11,7 @@
       class="og-inputotp__input"
       @input="onInput($event, index - 1)"
       @keydown="onKeydown($event, index - 1)"
+      @paste="onPaste"
     />
   </div>
 </template>
@@ -72,6 +73,22 @@ const onKeydown = (event: KeyboardEvent, idx: number) => {
     if (!tokens.value[idx] && idx > 0 && inputRefs.value[idx - 1]) {
       inputRefs.value[idx - 1].focus();
     }
+  }
+};
+
+const onPaste = (event: ClipboardEvent) => {
+  event.preventDefault();
+  if (props.disabled) return;
+  const pasteData = event.clipboardData?.getData('text') || '';
+  let cleaned = pasteData.trim();
+  if (props.integerOnly) {
+    cleaned = cleaned.replace(/\D/g, '');
+  }
+  if (cleaned) {
+    const chars = cleaned.split('').slice(0, props.length);
+    updateTokens(chars);
+    const focusIdx = Math.min(chars.length, props.length - 1);
+    inputRefs.value[focusIdx]?.focus();
   }
 };
 </script>
