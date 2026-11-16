@@ -2,42 +2,40 @@
 
 **OptimusGUI** è una libreria di componenti **Vue 3**, **TypeScript** e **Vite** ad alte prestazioni, con design **minimal e moderno**, sviluppata con principi di *Component Driven Development* e *Headless Composables*.
 
-Ispirata all'architettura di PrimeVue, **OptimusGUI** ricrea l'intero set di componenti e funzionalità fornendo un'infrastruttura di styling snella, flessibile e completamente personalizzabile basata su **CSS Custom Properties (Variabili CSS)** e file di tema dedicati.
+Ispirata all'architettura di PrimeVue, **OptimusGUI** ricrea un ricco set di componenti UI fornendo un'infrastruttura di styling snella, flessibile e completamente personalizzabile basata su **CSS Custom Properties (Variabili CSS)** e file di tema dedicati.
 
 ---
 
 ## 🌟 Caratteristiche Principali
 
-- **Stile Minimal & Moderno**: Design pulito e neutrale (bianco/slate) con elevata attenzione a micro-interazioni ed accessibilità (A11y).
-- **Parità Completa con PrimeVue**: Tutti i componenti, props, slot ed eventi principali di PrimeVue ricreati da zero.
+- **Stile Minimal & Moderno**: Design pulito e neutrale con elevata attenzione a micro-interazioni ed accessibilità (A11y).
+- **Parità con PrimeVue**: Componenti, props, slot ed eventi principali di PrimeVue ricreati da zero.
 - **Headless Composables First**: Logica complessa separata in composables riutilizzabili (`useSelect`, `useDialog`, `useToast`, `useDataTable`).
-- **Sistema di Tematizzazione via File CSS Separati**: Personalizzazione totale importando file CSS tematici direttamente nel `main.ts`.
+- **Sistema di Tematizzazione via CSS**: Personalizzazione totale importando file CSS tematici direttamente nel `main.ts`.
 - **TypeScript Strict**: Tipizzazione rigorosa per Props, Emits, Slots e Contexts.
-- **Tree-Shaking & Plugin Ready**: Esportazione sia come Plugin globale Vue (`app.use(OptimusGUI)`) sia come moduli singoli on-demand.
+- **Tree-Shaking & Plugin Ready**: Esportazione sia come Plugin globale Vue (`app.use(OptimusGUI)`) sia come componenti singoli on-demand.
 
 ---
 
-## 📦 Installazione e Collegamento
+## 📦 Installazione
 
-### Metodo 1: Collegamento Locale (Sviluppo)
-Nel `package.json` del tuo progetto Vue 3, aggiungi il riferimento locale a OptimusGUI:
+Installa il pacchetto tramite npm:
 
-```json
-{
-  "dependencies": {
-    "vue": "^3.4.0",
-    "optimus-gui": "file:/percorso/assoluto/a/OptimusGUI"
-  }
-}
-```
-Poi esegui nel tuo terminale:
 ```bash
-npm install
+npm install @danielippo/optimus-gui
+```
+
+Oppure con `pnpm` o `yarn`:
+
+```bash
+pnpm add @danielippo/optimus-gui
+# oppure
+yarn add @danielippo/optimus-gui
 ```
 
 ---
 
-## ⚙️ Inizializzazione nel Progetto Padre (`main.ts`)
+## ⚙️ Inizializzazione nel Progetto (`main.ts`)
 
 Configura la libreria ed importa gli stili all'interno del file `src/main.ts`:
 
@@ -46,10 +44,10 @@ import { createApp } from 'vue';
 import App from './App.vue';
 
 // 1. Importa il plugin di OptimusGUI
-import OptimusGUI from 'optimus-gui';
+import OptimusGUI from '@danielippo/optimus-gui';
 
 // 2. Importa il file di stile base di OptimusGUI
-import 'optimus-gui/style.css';
+import '@danielippo/optimus-gui/style.css';
 
 const app = createApp(App);
 
@@ -96,8 +94,8 @@ Crea un file di tema nel tuo progetto (es. `src/theme/my-custom-theme.css`):
 
 Importalo nel `main.ts`:
 ```typescript
-import 'optimus-gui/style.css';            // Stile base di OptimusGUI
-import './theme/my-custom-theme.css';     // Il tuo tema personalizzato (sovrascrive in automatico)
+import '@danielippo/optimus-gui/style.css';        // Stile base di OptimusGUI
+import './theme/my-custom-theme.css';             // Il tuo tema personalizzato
 ```
 
 ---
@@ -108,20 +106,20 @@ OptimusGUI include temi preset già pronti per l'uso:
 
 #### Tema Dark Preset
 ```typescript
-import 'optimus-gui/style.css';
-import 'optimus-gui/themes/dark.css';
+import '@danielippo/optimus-gui/style.css';
+import '@danielippo/optimus-gui/themes/dark.css';
 ```
 
 #### Tema Indigo Preset
 ```typescript
-import 'optimus-gui/style.css';
-import 'optimus-gui/themes/indigo.css';
+import '@danielippo/optimus-gui/style.css';
+import '@danielippo/optimus-gui/themes/indigo.css';
 ```
 
 #### Tema Obsidian & Violet Preset ("Obsidian & Royal Violet")
 ```typescript
-import 'optimus-gui/style.css';
-import 'optimus-gui/themes/obsidian-violet.css';
+import '@danielippo/optimus-gui/style.css';
+import '@danielippo/optimus-gui/themes/obsidian-violet.css';
 ```
 
 ---
@@ -166,7 +164,7 @@ const save = () => {
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue';
-import { OgButton, OgDialog, OgToast, useToast, useDialog } from 'optimus-gui';
+import { OgButton, OgDialog, OgToast, useToast, useDialog } from '@danielippo/optimus-gui';
 
 const toast = useToast();
 const { isVisible, open, close } = useDialog();
@@ -196,13 +194,13 @@ const onConfirm = () => {
 
 ## 📂 Cartella Esempi (`examples/`)
 
-Nella cartella [`examples/`](file:///home/dada/Desktop/Progetti/personali/OptimusGUI/examples/) troverai esempi pratici divisi per categoria:
+Nella cartella [`examples/`](./examples/) troverai esempi pratici divisi per categoria:
 
-- [`ButtonExample.vue`](file:///home/dada/Desktop/Progetti/personali/OptimusGUI/examples/ButtonExample.vue): Varianti, severities, badge e loading spinner di `OgButton`.
-- [`FormInputsExample.vue`](file:///home/dada/Desktop/Progetti/personali/OptimusGUI/examples/FormInputsExample.vue): Esempi di tutti i componenti di input (`OgInputText`, `OgSelect`, `OgMultiSelect`, `OgDatePicker`, `OgSlider`, `OgRating`, `OgInputOtp`, ecc.).
-- [`DataTableExample.vue`](file:///home/dada/Desktop/Progetti/personali/OptimusGUI/examples/DataTableExample.vue): Paginazione, ordinamento e celle personalizzate con `OgDataTable` e `OgColumn`.
-- [`OverlaysAndPanelsExample.vue`](file:///home/dada/Desktop/Progetti/personali/OptimusGUI/examples/OverlaysAndPanelsExample.vue): Finestre modali (`OgDialog`), pannelli laterali (`OgDrawer`), notifiche toast (`OgToast`) e schede (`OgCard`, `OgTabs`, `OgAccordion`).
-- [`CustomTheme.css`](file:///home/dada/Desktop/Progetti/personali/OptimusGUI/examples/CustomTheme.css): File CSS di esempio da importare nel `main.ts` per tematizzare la libreria.
+- [`ButtonExample.vue`](./examples/ButtonExample.vue): Varianti, severities, badge e loading spinner di `OgButton`.
+- [`FormInputsExample.vue`](./examples/FormInputsExample.vue): Esempi di tutti i componenti di input (`OgInputText`, `OgSelect`, `OgMultiSelect`, `OgDatePicker`, `OgSlider`, `OgRating`, `OgInputOtp`, ecc.).
+- [`DataTableExample.vue`](./examples/DataTableExample.vue): Paginazione, ordinamento e celle personalizzate con `OgDataTable` e `OgColumn`.
+- [`OverlaysAndPanelsExample.vue`](./examples/OverlaysAndPanelsExample.vue): Finestre modali (`OgDialog`), pannelli laterali (`OgDrawer`), notifiche toast (`OgToast`) e schede (`OgCard`, `OgTabs`, `OgAccordion`).
+- [`CustomTheme.css`](./examples/CustomTheme.css): File CSS di esempio da importare nel `main.ts` per tematizzare la libreria.
 
 ---
 
@@ -220,4 +218,4 @@ npm run build
 
 ## 📄 Licenza
 
-MIT License © OptimusGUI
+MIT License © Daniel Ippolito
