@@ -1,10 +1,23 @@
 /**
- * OptimusGUI Dark Theme Preset
+ * OptimusGUI Dark Slate Theme Preset
  */
 
-:root {
+:root,
+[data-theme='dark'] {
   --og-color-white: #0f172a;
   --og-color-black: #ffffff;
+
+  /* Dark-adapted Slate Gray Scale for OptimusGUI component internals */
+  --og-color-gray-50: #020617;
+  --og-color-gray-100: #0f172a;
+  --og-color-gray-200: #1e293b;
+  --og-color-gray-300: #334155;
+  --og-color-gray-400: #475569;
+  --og-color-gray-500: #64748b;
+  --og-color-gray-600: #94a3b8;
+  --og-color-gray-700: #cbd5e1;
+  --og-color-gray-800: #e2e8f0;
+  --og-color-gray-900: #f8fafc;
 
   --og-bg-body: #020617;
   --og-bg-surface: #0f172a;
@@ -25,4 +38,47 @@
   --og-color-primary-500: #38bdf8;
   --og-color-primary-600: #0284c7;
   --og-color-primary-contrast: #0f172a;
+
+  --og-focus-ring-color: rgba(56, 189, 248, 0.35);
+
+  /* Dark-adapted status colors */
+  --og-color-success-bg: rgba(16, 185, 129, 0.16);
+  --og-color-success-border: rgba(16, 185, 129, 0.4);
+  --og-color-success-text: #34d399;
+
+  --og-color-info-bg: rgba(56, 189, 248, 0.16);
+  --og-color-info-border: rgba(56, 189, 248, 0.4);
+  --og-color-info-text: #38bdf8;
+
+  --og-color-warning-bg: rgba(245, 158, 11, 0.16);
+  --og-color-warning-border: rgba(245, 158, 11, 0.4);
+  --og-color-warning-text: #fbbf24;
+
+  --og-color-danger-bg: rgba(239, 68, 68, 0.16);
+  --og-color-danger-border: rgba(239, 68, 68, 0.4);
+  --og-color-danger-text: #f87171;
+
+  --og-z-modal: 1100;
+  --og-z-dropdown: 1150;
+
+  /* Dark Slate Themed Scrollbar */
+  --og-scrollbar-size: 6px;
+  --og-scrollbar-track: transparent;
+  --og-scrollbar-thumb: #334155;
+  --og-scrollbar-thumb-hover: #38bdf8;
+}
+
+.og-select__filter-input,
+.og-multiselect__filter-input {
+  background-color: var(--og-bg-muted);
+  color: var(--og-text-primary);
+}
+
+.og-select__filter-input::placeholder,
+.og-multiselect__filter-input::placeholder {
+  color: var(--og-text-muted);
+}
+
+.og-datatable__row:hover {
+  background-color: #1e293b;
 }

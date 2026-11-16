@@ -266,16 +266,34 @@ const buttonClasses = computed(() => {
 
 /* Severities */
 .og-button--secondary {
-  --og-button-bg: var(--og-color-gray-200);
-  --og-button-color: var(--og-color-gray-800);
-  --og-button-hover-bg: var(--og-color-gray-300);
-  --og-button-hover-color: var(--og-color-gray-900);
+  --og-button-bg: var(--og-bg-muted);
+  --og-button-color: var(--og-text-primary);
+  --og-button-border-color: var(--og-border-color);
+  --og-button-hover-bg: var(--og-border-color-hover);
+  --og-button-hover-color: var(--og-text-primary);
+  --og-button-hover-border-color: var(--og-border-color-hover);
+  --og-button-active-bg: var(--og-border-color-hover);
+  --og-button-active-color: var(--og-text-primary);
 }
 .og-button--secondary.og-button--outlined {
   --og-button-bg: transparent;
-  --og-button-color: var(--og-color-gray-700);
-  --og-button-border-color: var(--og-color-gray-300);
-  --og-button-hover-bg: var(--og-color-gray-100);
+  --og-button-color: var(--og-text-primary);
+  --og-button-border-color: var(--og-border-color);
+  --og-button-hover-bg: var(--og-bg-muted);
+  --og-button-hover-color: var(--og-text-primary);
+  --og-button-hover-border-color: var(--og-border-color-hover);
+  --og-button-active-bg: var(--og-bg-muted);
+  --og-button-active-color: var(--og-text-primary);
+}
+.og-button--secondary.og-button--text {
+  --og-button-bg: transparent;
+  --og-button-color: var(--og-text-primary);
+  --og-button-border-color: transparent;
+  --og-button-hover-bg: var(--og-bg-muted);
+  --og-button-hover-color: var(--og-text-primary);
+  --og-button-hover-border-color: transparent;
+  --og-button-active-bg: var(--og-bg-muted);
+  --og-button-active-color: var(--og-text-primary);
 }
 
 .og-button--success {

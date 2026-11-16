@@ -40,6 +40,7 @@
       "scripts": {
         "dev": "vite",
         "build": "vite build && npm run copy-themes",
+        "build:demo": "vite build --config vite.config.demo.ts",
         "copy-themes": "node scripts/copy-themes.js",
         "type-check": "vue-tsc --noEmit",
         "prepublishOnly": "npm run build"

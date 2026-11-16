@@ -316,6 +316,7 @@ const selectClasses = computed(() => [
 
 .og-select__label {
   flex: 1;
+  min-width: 0;
   font-family: var(--og-font-family);
   font-size: var(--og-select-font-size);
   color: var(--og-text-primary);
