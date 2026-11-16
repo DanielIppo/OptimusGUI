@@ -1,5 +1,12 @@
 # 🚀 OptimusGUI
 
+<p align="left">
+  <a href="https://www.npmjs.com/package/@danielippo/optimus-gui"><img src="https://img.shields.io/npm/v/@danielippo/optimus-gui?style=flat-square&color=6366f1" alt="NPM Version" /></a>
+  <a href="https://www.npmjs.com/package/@danielippo/optimus-gui"><img src="https://img.shields.io/npm/dm/@danielippo/optimus-gui?style=flat-square&color=38bdf8" alt="NPM Downloads" /></a>
+  <a href="https://danielippo.github.io/OptimusGUI/"><img src="https://img.shields.io/badge/Showcase-Live%20Demo-10b981?style=flat-square" alt="Showcase" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-7F23FF?style=flat-square" alt="License" /></a>
+</p>
+
 **OptimusGUI** è una libreria di componenti **Vue 3**, **TypeScript** e **Vite** ad alte prestazioni, con design **minimal e moderno**, sviluppata con principi di *Component Driven Development* e *Headless Composables*.
 
 Ispirata all'architettura di PrimeVue, **OptimusGUI** ricrea un ricco set di componenti UI fornendo un'infrastruttura di styling snella, flessibile e completamente personalizzabile basata su **CSS Custom Properties (Variabili CSS)** e file di tema dedicati.
