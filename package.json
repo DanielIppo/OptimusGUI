@@ -1,6 +1,6 @@
 {
       "name": "@danielippo/optimus-gui",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "type": "module",
       "description": "A modern, minimal, lightweight, and customizable Vue 3 Component Library inspired by PrimeVue architecture",
       "author": "Daniel Ippolito",
