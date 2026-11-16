@@ -1,42 +1,58 @@
 {
-  "name": "optimus-gui",
-  "version": "1.0.0",
-  "type": "module",
-  "description": "A modern, minimal, lightweight, and customizable Vue 3 Component Library inspired by PrimeVue architecture",
-  "main": "./dist/optimus-gui.umd.cjs",
-  "module": "./dist/optimus-gui.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
+      "name": "optimus-gui",
+      "version": "1.0.0",
+      "type": "module",
+      "description": "A modern, minimal, lightweight, and customizable Vue 3 Component Library inspired by PrimeVue architecture",
+      "author": "Daniel Ippolito",
+      "license": "MIT",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DanielIppo/OptimusGUI.git"
+      },
+      "keywords": [
+        "vue",
+        "vue3",
+        "components",
+        "ui",
+        "primevue",
+        "tailwind",
+        "design-system"
+      ],
+      "main": "./dist/optimus-gui.umd.cjs",
+      "module": "./dist/optimus-gui.js",
       "types": "./dist/index.d.ts",
-      "import": "./dist/optimus-gui.js",
-      "require": "./dist/optimus-gui.umd.cjs"
-    },
-    "./style.css": "./dist/style.css",
-    "./themes/*.css": "./dist/themes/*.css"
-  },
-  "files": [
-    "dist"
-  ],
-  "sideEffects": [
-    "*.css",
-    "**/*.css"
-  ],
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build && npm run copy-themes",
-    "copy-themes": "node scripts/copy-themes.js",
-    "type-check": "vue-tsc --noEmit"
-  },
-  "peerDependencies": {
-    "vue": "^3.4.0"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.0",
-    "typescript": "^5.4.0",
-    "vite": "^5.2.0",
-    "vite-plugin-dts": "^3.8.0",
-    "vue": "^3.4.0",
-    "vue-tsc": "^2.0.0"
-  }
-}
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.ts",
+          "import": "./dist/optimus-gui.js",
+          "require": "./dist/optimus-gui.umd.cjs"
+        },
+        "./style.css": "./dist/style.css",
+        "./themes/*.css": "./dist/themes/*.css"
+      },
+      "files": [
+        "dist"
+      ],
+      "sideEffects": [
+        "*.css",
+        "**/*.css"
+      ],
+      "scripts": {
+        "dev": "vite",
+        "build": "vite build && npm run copy-themes",
+        "copy-themes": "node scripts/copy-themes.js",
+        "type-check": "vue-tsc --noEmit",
+        "prepublishOnly": "npm run build"
+      },
+      "peerDependencies": {
+        "vue": "^3.4.0"
+      },
+      "devDependencies": {
+        "@vitejs/plugin-vue": "^5.0.0",
+        "typescript": "^5.4.0",
+        "vite": "^5.2.0",
+        "vite-plugin-dts": "^3.8.0",
+        "vue": "^3.4.0",
+        "vue-tsc": "^2.0.0"
+      }
+    }
