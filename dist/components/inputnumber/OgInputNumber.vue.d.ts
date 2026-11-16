@@ -48,8 +48,8 @@ declare const __VLS_component: import('vue').DefineComponent<import('vue').Extra
 }>, {
     disabled: boolean;
     modelValue: number | null;
-    fluid: boolean;
     invalid: boolean;
+    fluid: boolean;
     step: number;
     showButtons: boolean;
     buttonLayout: "stacked" | "horizontal" | "vertical";

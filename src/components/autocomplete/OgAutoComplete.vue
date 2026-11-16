@@ -83,11 +83,11 @@ const updateOverlayPosition = () => {
   if (!containerRef.value) return;
   const rect = containerRef.value.getBoundingClientRect();
   overlayStyle.value = {
-    position: 'absolute',
-    top: `${rect.bottom + window.scrollY + 4}px`,
-    left: `${rect.left + window.scrollX}px`,
+    position: 'fixed',
+    top: `${rect.bottom + 4}px`,
+    left: `${rect.left}px`,
     width: `${rect.width}px`,
-    zIndex: 'var(--og-z-dropdown)',
+    zIndex: 'var(--og-z-dropdown, 1150)',
   };
 };
 
@@ -139,6 +139,30 @@ const onBlur = () => {
     isOpen.value = false;
   }, 200);
 };
+
+const handleClickOutside = (e: Event) => {
+  if (!isOpen.value) return;
+  const target = e.target as Node | null;
+  if (
+    target &&
+    containerRef.value &&
+    !containerRef.value.contains(target) &&
+    overlayRef.value &&
+    !overlayRef.value.contains(target)
+  ) {
+    isOpen.value = false;
+  }
+};
+
+onMounted(() => {
+  document.addEventListener('pointerdown', handleClickOutside, true);
+  document.addEventListener('click', handleClickOutside, true);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('pointerdown', handleClickOutside, true);
+  document.removeEventListener('click', handleClickOutside, true);
+});
 
 const containerClasses = computed(() => [
   'og-autocomplete',

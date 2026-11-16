@@ -35,8 +35,8 @@ declare const _default: import('vue').DefineComponent<import('vue').ExtractPropT
     disabled: boolean;
     modelValue: Date | string | null;
     placeholder: string;
-    fluid: boolean;
     invalid: boolean;
+    fluid: boolean;
     showClear: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, true, {}, any>;
 export default _default;

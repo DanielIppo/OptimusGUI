@@ -66,20 +66,20 @@ const tagClasses = computed(() => [
   color: var(--og-color-gray-800);
 }
 .og-tag--success {
-  background-color: #ecfdf5;
-  color: #065f46;
+  background-color: var(--og-color-success-bg);
+  color: var(--og-color-success-text);
 }
 .og-tag--info {
-  background-color: #eff6ff;
-  color: #1e40af;
+  background-color: var(--og-color-info-bg);
+  color: var(--og-color-info-text);
 }
 .og-tag--warning {
-  background-color: #fffbeb;
-  color: #92400e;
+  background-color: var(--og-color-warning-bg);
+  color: var(--og-color-warning-text);
 }
 .og-tag--danger {
-  background-color: #fef2f2;
-  color: #991b1b;
+  background-color: var(--og-color-danger-bg);
+  color: var(--og-color-danger-text);
 }
 
 .og-tag__icon {

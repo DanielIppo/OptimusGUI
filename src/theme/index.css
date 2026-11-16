@@ -103,8 +103,81 @@
 
   /* Z-Index Hierarchy */
   --og-z-overlay: 1000;
-  --og-z-dropdown: 1050;
   --og-z-modal: 1100;
+  --og-z-dropdown: 1150;
   --og-z-toast: 1200;
   --og-z-tooltip: 1300;
+
+  /* Themed Scrollbar Tokens */
+  --og-scrollbar-size: 6px;
+  --og-scrollbar-track: var(--og-bg-subtle);
+  --og-scrollbar-thumb: var(--og-border-color-hover);
+  --og-scrollbar-thumb-hover: var(--og-color-primary-500);
+}
+
+/* Themed Scrollbars for OptimusGUI Overlays & Scroll Containers */
+.og-select__overlay::-webkit-scrollbar,
+.og-select__list::-webkit-scrollbar,
+.og-multiselect__overlay::-webkit-scrollbar,
+.og-multiselect__list::-webkit-scrollbar,
+.og-autocomplete__overlay::-webkit-scrollbar,
+.og-autocomplete__list::-webkit-scrollbar,
+.og-listbox__list::-webkit-scrollbar,
+.og-dialog__content::-webkit-scrollbar,
+.og-drawer__content::-webkit-scrollbar {
+  width: var(--og-scrollbar-size);
+  height: var(--og-scrollbar-size);
+}
+
+.og-select__overlay::-webkit-scrollbar-track,
+.og-select__list::-webkit-scrollbar-track,
+.og-multiselect__overlay::-webkit-scrollbar-track,
+.og-multiselect__list::-webkit-scrollbar-track,
+.og-autocomplete__overlay::-webkit-scrollbar-track,
+.og-autocomplete__list::-webkit-scrollbar-track,
+.og-listbox__list::-webkit-scrollbar-track,
+.og-dialog__content::-webkit-scrollbar-track,
+.og-drawer__content::-webkit-scrollbar-track {
+  background: var(--og-scrollbar-track);
+  border-radius: 9999px;
+}
+
+.og-select__overlay::-webkit-scrollbar-thumb,
+.og-select__list::-webkit-scrollbar-thumb,
+.og-multiselect__overlay::-webkit-scrollbar-thumb,
+.og-multiselect__list::-webkit-scrollbar-thumb,
+.og-autocomplete__overlay::-webkit-scrollbar-thumb,
+.og-autocomplete__list::-webkit-scrollbar-thumb,
+.og-listbox__list::-webkit-scrollbar-thumb,
+.og-dialog__content::-webkit-scrollbar-thumb,
+.og-drawer__content::-webkit-scrollbar-thumb {
+  background: var(--og-scrollbar-thumb);
+  border-radius: 9999px;
+}
+
+.og-select__overlay::-webkit-scrollbar-thumb:hover,
+.og-select__list::-webkit-scrollbar-thumb:hover,
+.og-multiselect__overlay::-webkit-scrollbar-thumb:hover,
+.og-multiselect__list::-webkit-scrollbar-thumb:hover,
+.og-autocomplete__overlay::-webkit-scrollbar-thumb:hover,
+.og-autocomplete__list::-webkit-scrollbar-thumb:hover,
+.og-listbox__list::-webkit-scrollbar-thumb:hover,
+.og-dialog__content::-webkit-scrollbar-thumb:hover,
+.og-drawer__content::-webkit-scrollbar-thumb:hover {
+  background: var(--og-scrollbar-thumb-hover);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .og-select__overlay,
+  .og-select__list,
+  .og-multiselect__overlay,
+  .og-multiselect__list,
+  .og-autocomplete__overlay,
+  .og-autocomplete__list,
+  .og-listbox__list,
+  .og-dialog__content,
+  .og-drawer__content {
+    scrollbar-width: thin;
+    scrollbar-color: var(--og-scrollbar-thumb) var(--og-scrollbar-track);
+  }
 }

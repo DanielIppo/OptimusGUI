@@ -198,12 +198,15 @@ const clear = () => {
 const updateOverlayPosition = () => {
   if (!containerRef.value || !props.overlayTeleport) return;
   const rect = containerRef.value.getBoundingClientRect();
+  const openUpward = window.innerHeight - rect.bottom < 220 && rect.top > 240;
   overlayStyle.value = {
-    position: 'absolute',
-    top: `${rect.bottom + window.scrollY + 4}px`,
-    left: `${rect.left + window.scrollX}px`,
+    position: 'fixed',
+    ...(openUpward
+      ? { bottom: `${window.innerHeight - rect.top + 4}px` }
+      : { top: `${rect.bottom + 4}px` }),
+    left: `${rect.left}px`,
     width: `${rect.width}px`,
-    zIndex: 'var(--og-z-dropdown)',
+    zIndex: 'var(--og-z-dropdown, 1150)',
   };
 };
 
@@ -229,12 +232,15 @@ const onKeydown = (event: KeyboardEvent) => {
   }
 };
 
-const handleClickOutside = (event: MouseEvent) => {
+const handleClickOutside = (event: Event) => {
+  if (!isOpen.value) return;
+  const target = event.target as Node | null;
   if (
+    target &&
     containerRef.value &&
-    !containerRef.value.contains(event.target as Node) &&
+    !containerRef.value.contains(target) &&
     overlayRef.value &&
-    !overlayRef.value.contains(event.target as Node)
+    !overlayRef.value.contains(target)
   ) {
     close();
   }
@@ -251,11 +257,13 @@ watch(isOpen, (newVal) => {
 });
 
 onMounted(() => {
-  document.addEventListener('click', handleClickOutside);
+  document.addEventListener('pointerdown', handleClickOutside, true);
+  document.addEventListener('click', handleClickOutside, true);
 });
 
 onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside);
+  document.removeEventListener('pointerdown', handleClickOutside, true);
+  document.removeEventListener('click', handleClickOutside, true);
   window.removeEventListener('resize', updateOverlayPosition);
   window.removeEventListener('scroll', updateOverlayPosition, true);
 });
@@ -384,6 +392,10 @@ const selectClasses = computed(() => [
 }
 
 .og-select__filter-container {
+  position: sticky;
+  top: 0;
+  background-color: var(--og-color-white);
+  z-index: 1;
   padding: var(--og-spacing-xs) var(--og-spacing-sm);
   border-bottom: 1px solid var(--og-border-color);
 }
@@ -392,6 +404,8 @@ const selectClasses = computed(() => [
   width: 100%;
   padding: var(--og-spacing-xs) var(--og-spacing-sm);
   font-size: var(--og-font-size-xs);
+  background-color: var(--og-bg-muted);
+  color: var(--og-text-primary);
   border: 1px solid var(--og-border-color);
   border-radius: var(--og-radius-sm);
   outline: none;

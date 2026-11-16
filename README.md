@@ -118,6 +118,12 @@ import 'optimus-gui/style.css';
 import 'optimus-gui/themes/indigo.css';
 ```
 
+#### Tema Obsidian & Violet Preset ("Obsidian & Royal Violet")
+```typescript
+import 'optimus-gui/style.css';
+import 'optimus-gui/themes/obsidian-violet.css';
+```
+
 ---
 
 ## 💻 Esempi di Utilizzo nei Componenti

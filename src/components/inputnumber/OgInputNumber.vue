@@ -151,7 +151,7 @@ const decrement = () => {
 
 const onInput = (event: Event) => {
   const target = event.target as HTMLInputElement;
-  const val = target.value.trim();
+  const val = target.value.trim().replace(',', '.');
   if (val === '' || val === '-') {
     emit('update:modelValue', null);
     return;
@@ -162,14 +162,14 @@ const onInput = (event: Event) => {
       target.value = String(props.max);
       updateValue(props.max);
     } else {
-      updateValue(num);
+      emit('update:modelValue', num);
     }
   }
 };
 
 const onBlur = (event: FocusEvent) => {
   const target = event.target as HTMLInputElement;
-  const val = target.value.trim();
+  const val = target.value.trim().replace(',', '.');
   if (val !== '') {
     const num = Number(val);
     if (!isNaN(num)) {

@@ -19,8 +19,8 @@ declare const _default: import('vue').DefineComponent<import('vue').ExtractPropT
 }>>> & Readonly<{}>, {
     animation: "wave" | "none";
     width: string;
-    shape: "rectangle" | "circle";
     height: string;
+    shape: "rectangle" | "circle";
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, true, {}, any>;
 export default _default;
 type __VLS_NonUndefinedable<T> = T extends undefined ? never : T;

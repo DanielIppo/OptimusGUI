@@ -41,9 +41,9 @@ declare const _default: import('vue').DefineComponent<import('vue').ExtractPropT
 }>, {
     disabled: boolean;
     modelValue: string | null;
+    invalid: boolean;
     variant: "outlined" | "filled";
     fluid: boolean;
-    invalid: boolean;
     rows: number;
     autoResize: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, true, {}, any>;

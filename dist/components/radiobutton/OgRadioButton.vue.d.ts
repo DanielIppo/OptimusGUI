@@ -29,8 +29,8 @@ declare const _default: import('vue').DefineComponent<import('vue').ExtractPropT
     onBlur?: ((event: FocusEvent) => any) | undefined;
 }>, {
     disabled: boolean;
-    readonly: boolean;
     invalid: boolean;
+    readonly: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, true, {}, any>;
 export default _default;
 type __VLS_NonUndefinedable<T> = T extends undefined ? never : T;

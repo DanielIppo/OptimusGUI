@@ -33,8 +33,8 @@ declare const __VLS_component: import('vue').DefineComponent<import('vue').Extra
 }>, {
     disabled: boolean;
     modelValue: number | null;
-    readonly: boolean;
     cancel: boolean;
+    readonly: boolean;
     stars: number;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, true, {}, any>;
 declare const _default: __VLS_WithTemplateSlots<typeof __VLS_component, ReturnType<typeof __VLS_template>>;

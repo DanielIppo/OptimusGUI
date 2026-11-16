@@ -58,8 +58,8 @@ declare const __VLS_component: import('vue').DefineComponent<import('vue').Extra
     disabled: boolean;
     modelValue: any[];
     placeholder: string;
-    fluid: boolean;
     invalid: boolean;
+    fluid: boolean;
     showClear: boolean;
     options: any[];
     filterPlaceholder: string;

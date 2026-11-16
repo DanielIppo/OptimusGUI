@@ -70,9 +70,9 @@ declare const __VLS_component: import('vue').DefineComponent<import('vue').Extra
     filter: boolean;
     disabled: boolean;
     placeholder: string;
+    invalid: boolean;
     loading: boolean;
     fluid: boolean;
-    invalid: boolean;
     showClear: boolean;
     options: any[];
     filterPlaceholder: string;

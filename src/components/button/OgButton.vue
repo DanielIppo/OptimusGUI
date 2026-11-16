@@ -288,7 +288,7 @@ const buttonClasses = computed(() => {
   --og-button-bg: transparent;
   --og-button-color: #10b981;
   --og-button-border-color: #10b981;
-  --og-button-hover-bg: #ecfdf5;
+  --og-button-hover-bg: var(--og-color-success-bg);
 }
 
 .og-button--info {
@@ -301,7 +301,7 @@ const buttonClasses = computed(() => {
   --og-button-bg: transparent;
   --og-button-color: #3b82f6;
   --og-button-border-color: #3b82f6;
-  --og-button-hover-bg: #eff6ff;
+  --og-button-hover-bg: var(--og-color-info-bg);
 }
 
 .og-button--warning {
@@ -314,7 +314,7 @@ const buttonClasses = computed(() => {
   --og-button-bg: transparent;
   --og-button-color: #f59e0b;
   --og-button-border-color: #f59e0b;
-  --og-button-hover-bg: #fffbeb;
+  --og-button-hover-bg: var(--og-color-warning-bg);
 }
 
 .og-button--danger {
@@ -327,7 +327,7 @@ const buttonClasses = computed(() => {
   --og-button-bg: transparent;
   --og-button-color: #ef4444;
   --og-button-border-color: #ef4444;
-  --og-button-hover-bg: #fef2f2;
+  --og-button-hover-bg: var(--og-color-danger-bg);
 }
 
 /* Modifiers */

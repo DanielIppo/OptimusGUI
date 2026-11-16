@@ -38,9 +38,9 @@ declare const _default: import('vue').DefineComponent<import('vue').ExtractPropT
     type: string;
     disabled: boolean;
     modelValue: string | number | null;
+    invalid: boolean;
     variant: "outlined" | "filled";
     fluid: boolean;
-    invalid: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, true, {}, any>;
 export default _default;
 type __VLS_NonUndefinedable<T> = T extends undefined ? never : T;

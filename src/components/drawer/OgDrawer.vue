@@ -3,14 +3,13 @@
     <div
       v-if="visible"
       :class="['og-drawer-mask', { 'og-drawer-mask--modal': modal }]"
-      @click="onMaskClick"
+      @click.self="onMaskClick"
     >
       <div
         :class="drawerClasses"
         role="complementary"
         aria-modal="true"
         tabindex="-1"
-        @click.stop
         @keydown.esc="onEsc"
       >
         <div v-if="header || $slots.header || closable" class="og-drawer__header">

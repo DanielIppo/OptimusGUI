@@ -3,7 +3,7 @@
     <div
       v-if="visible"
       :class="['og-dialog-mask', { 'og-dialog-mask--modal': modal }, `og-dialog-mask--${position}`]"
-      @click="onMaskClick"
+      @click.self="onMaskClick"
     >
       <div
         ref="dialogRef"
@@ -12,7 +12,6 @@
         role="dialog"
         aria-modal="true"
         tabindex="-1"
-        @click.stop
         @keydown.esc="onEsc"
       >
         <!-- Header -->
